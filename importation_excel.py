@@ -9,8 +9,13 @@ params = {
     "departement": "74", # Le département, pas compliqué c'est le même que le code postal
     "etat_administratif": "A", # Si l'entreprise est active où non
     "est_association": "false", # Si ce n'est pas une assosiation (revérifier derrière)
-    #"section_activite_principale": "",
+    #"activite_principale": "", # Le code NAF ou code APE, un code d'activité suivant la nomenclature de l'INSEE valide en juin 2026 (cf README)
     "tranche_effectif_salarie": "03,11,12,21", # Tranche du nombre de salariés (cf README)
+    "categorie_entreprise" :"PME, ETI", # PME, ETI ou GE
+    #"nature_juridique" : "", # Nature de l'entreprise (cf README)
+    #"section_activite_principale" : #Cf README
+    "date_naissance_personne_min" : "1954-01-01",
+    "date_naissance_personne_max" : "1972-01-01",
     "per_page": 25,
     "page": 1  
 }
