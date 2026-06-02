@@ -6,7 +6,7 @@ import time
 # Ici les éléments que je filtre pour récupérer mes données
 base_url = "https://recherche-entreprises.api.gouv.fr/search"
 params = {
-    "departement": "84", # Le département, pas compliqué c'est le même que le code postal
+    "departement": "74", # Le département, pas compliqué c'est le même que le code postal
     "etat_administratif": "A", # Si l'entreprise est active où non
     "est_association": "false", # Si ce n'est pas une assosiation (revérifier derrière)
     #"section_activite_principale": "",
@@ -154,7 +154,7 @@ if "siren" in df_raw.columns:
     df_raw = df_raw.drop_duplicates(subset="siren", keep="first")
 
 # Et on exporte
-output_file = "entreprises_siren_84.xlsx"
+output_file = "entreprises_siren_74_V1.xlsx"
 df_raw.to_excel(output_file, index=False)
 
 print(f"Fichier créé : {output_file}")
