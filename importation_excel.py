@@ -127,14 +127,24 @@ if "complements" in df_raw.columns:
         axis=1
     )
 
-# On refiltre assos & service public au cas où
+# On refiltre au cas où
 for col in ["complements_est_association", "complements_est_service_public"]:
     if col not in df_raw.columns:
         df_raw[col] = "FAUX"
+        
+df_raw["etab_est_siege"] = (
+    df_raw["etab_est_siege"]
+    .astype(str)
+    .str.strip()
+    .str.upper()
+)
 
 mask_exclude = (
     (df_raw["complements_est_association"] == "VRAI") |
-    (df_raw["complements_est_service_public"] == "VRAI")
+    (df_raw["complements_est_service_public"] == "VRAI") |
+    (df_raw["etab_est_siege"] == "FALSE") |
+    (df_raw["dirigeant_annee_de_naissance"] < "1954") |
+    (df_raw["dirigeant_annee_de_naissance"] > "1972")
 )
 df_raw = df_raw[~mask_exclude].reset_index(drop=True)
 
