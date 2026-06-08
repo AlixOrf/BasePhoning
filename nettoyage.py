@@ -770,6 +770,13 @@ df["activite_principale"] = (
     .fillna(df["activite_principale"])  # On conserve la valeur si code inconnu
 )
 
+# On remplace le code par le libellé des effectifs
+df["tranche_effectif_salarie"] = (
+    df["tranche_effectif_salarie"]
+    .map(effectif_dict)
+    .fillna(df["tranche_effectif_salarie"])  # On conserve la valeur si code inconnu
+)
+
 # On sauvegarde
 df.to_excel("entreprises_siren_74_V2.xlsx", index=False)
 
