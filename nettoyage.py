@@ -1,4 +1,5 @@
 import pandas as pd
+import re
 
 # Tout les code NAF (un peu long attention)
 naf_dict = {
@@ -736,27 +737,30 @@ naf_dict = {
 # Tout les effectifs
 effectif_dict = {
   "NN": "Unité non employeuse (pas de salarié au cours de l'année de référence et pas d'effectif au 31/12)",
-  "00": "0 salarié (n'ayant pas d'effectif au 31/12 mais ayant employé des salariés au cours de l'année de référence)",
-  "01": "1 ou 2 salariés",
-  "02": "3 à 5 salariés",
-  "03": "6 à 9 salariés",
-  "11": "10 à 19 salariés",
-  "12": "20 à 49 salariés",
-  "21": "50 à 99 salariés",
-  "22": "100 à 199 salariés",
-  "31": "200 à 249 salariés",
-  "32": "250 à 499 salariés",
-  "41": "500 à 999 salariés",
-  "42": "1 000 à 1 999 salariés",
-  "51": "2 000 à 4 999 salariés",
-  "52": "5 000 à 9 999 salariés",
-  "53": "10 000 salariés et plus"
+  00: "0 salarié (n'ayant pas d'effectif au 31/12 mais ayant employé des salariés au cours de l'année de référence)",
+  1: "1 ou 2 salariés",
+  2: "3 à 5 salariés",
+  3: "6 à 9 salariés",
+  11: "10 à 19 salariés",
+  12: "20 à 49 salariés",
+  21: "50 à 99 salariés",
+  22: "100 à 199 salariés",
+  31: "200 à 249 salariés",
+  32: "250 à 499 salariés",
+  41: "500 à 999 salariés",
+  42: "1 000 à 1 999 salariés",
+  51: "2 000 à 4 999 salariés",
+  52: "5 000 à 9 999 salariés",
+  53: "10 000 salariés et plus"
 }
 
-# Lecture du fichier Excel
+print("Lecture du fichier Excel...")
 df = pd.read_excel("entreprises_siren_74_V1.xlsx")
+print(f"{len(df)} lignes chargées")
+print(f"{len(df.columns)} colonnes détectées")
 
 # On uniformise le format des codes NAF
+print("Remplacement des codes NAF...")
 df["activite_principale"] = (
     df["activite_principale"]
     .astype(str)
@@ -769,13 +773,51 @@ df["activite_principale"] = (
     .map(naf_dict)
     .fillna(df["activite_principale"])  # On conserve la valeur si code inconnu
 )
+print("Codes NAF remplacés")
 
 # On remplace le code par le libellé des effectifs
+print("Remplacement des tranches d'effectifs...")
 df["tranche_effectif_salarie"] = (
     df["tranche_effectif_salarie"]
     .map(effectif_dict)
     .fillna(df["tranche_effectif_salarie"])  # On conserve la valeur si code inconnu
 )
+print("Tranches d'effectifs remplacées")
+
+# 1) récupérer toutes les années présentes
+print("Recherche des années financières...")
+years = []
+for col in df.columns:
+    match = re.search(r'finances_(\d{4})\.', col)
+    if match:
+        years.append(int(match.group(1)))
+
+years = sorted(set(years))
+print(f"Années trouvées : {years}")
+
+last_year = max(years)
+print(f"Année la plus récente : {last_year}")
+
+# 2) construire les noms de colonnes les plus récents
+ca_col = f"finances_{last_year}.ca"
+rn_col = f"finances_{last_year}.resultat_net"
+
+print(f"Colonne CA utilisée : {ca_col}")
+print(f"Colonne résultat net utilisée : {rn_col}")
+
+# 3) créer les colonnes finales avec année entre parenthèses
+df["ca_recent"] = df[ca_col].astype(str) + f" ({last_year})"
+df["resultat_net_recent"] = df[rn_col].astype(str) + f" ({last_year})"
+
+print("Colonnes financières créées")
+print("Aperçu :")
+print(df[["ca_recent", "resultat_net_recent"]].head())
+
+# On enlève les colones inutiles
+cols_to_drop = [
+    "activite_principale_naf25", "caractere_employeur", "annee_tranche_effectif_salarie", "dirigeant_nationalite", "dirigeant_type_dirigeant", "dirigeant_siren", "dirigeant_denomination", "etab_activite_principale_naf25", "etab_ancien_siege", "etab_annee_tranche_effectif_salarie", "etab_geo_id", "etab_liste_finess", "etab_liste_id_bio", "etab_liste_idcc", "etab_tranche_effectif_salarie", "finances_2024.ca","finances_2024.resultat_net","finances_2023.ca","finances_2023.resultat_net","finances_2022.ca","finances_2022.resultat_net","finances_2025.ca","finances_2025.resultat_net","finances_2021.ca","finances_2021.resultat_net","finances_2017.ca","finances_2017.resultat_net","finances_2020.ca","finances_2020.resultat_net","finances_2018.ca","finances_2018.resultat_net","finances_2019.ca","finances_2019.resultat_net","finances_2016.ca","finances_2016.resultat_net","finances_2015.ca","finances_2015.resultat_net","complements_est_association","complements_est_avocat","complements_est_entrepreneur_spectacle","complements_est_ess", "complements_est_finess", "complements_est_organisme_formation", "complements_est_qualiopi", "complements_est_rge", "complements_est_siae", "complements_est_societe_mission", "complements_est_uai", "complements_est_patrimoine_vivant", "complements_bilan_ges_renseigne", "complements_type_siae", "complements_a_aide_minimis", "complements_a_aide_ademe", "complements_est_administration", "complements_est_service_public", "complements_est_l100_3"
+]
+df = df.drop(columns=[c for c in cols_to_drop if c in df.columns], errors="ignore")
 
 # On sauvegarde
 df.to_excel("entreprises_siren_74_V2.xlsx", index=False)
