@@ -784,34 +784,39 @@ df["tranche_effectif_salarie"] = (
 )
 print("Tranches d'effectifs remplacées")
 
-# 1) récupérer toutes les années présentes
-print("Recherche des années financières...")
-years = []
-for col in df.columns:
-    match = re.search(r'finances_(\d{4})\.', col)
-    if match:
-        years.append(int(match.group(1)))
+import pandas as pd
 
-years = sorted(set(years))
-print(f"Années trouvées : {years}")
+# Colonnes CA triées de la plus récente à la plus ancienne
+ca_cols = sorted(
+    [col for col in df.columns if col.endswith(".ca")],
+    reverse=True
+)
 
-last_year = max(years)
-print(f"Année la plus récente : {last_year}")
+# Colonnes résultat net triées de la plus récente à la plus ancienne
+rn_cols = sorted(
+    [col for col in df.columns if col.endswith(".resultat_net")],
+    reverse=True
+)
 
-# 2) construire les noms de colonnes les plus récents
-ca_col = f"finances_{last_year}.ca"
-rn_col = f"finances_{last_year}.resultat_net"
+def get_latest_value(row, cols):
+    for col in cols:
+        value = row[col]
 
-print(f"Colonne CA utilisée : {ca_col}")
-print(f"Colonne résultat net utilisée : {rn_col}")
+        if pd.notna(value) and value != "":
+            year = col.split("_")[1].split(".")[0]
+            return f"{value} ({year})"
 
-# 3) créer les colonnes finales avec année entre parenthèses
-df["ca_recent"] = df[ca_col].astype(str) + f" ({last_year})"
-df["resultat_net_recent"] = df[rn_col].astype(str) + f" ({last_year})"
+    return None
 
-print("Colonnes financières créées")
-print("Aperçu :")
-print(df[["ca_recent", "resultat_net_recent"]].head())
+df["ca_recent"] = df.apply(
+    lambda row: get_latest_value(row, ca_cols),
+    axis=1
+)
+
+df["resultat_net_recent"] = df.apply(
+    lambda row: get_latest_value(row, rn_cols),
+    axis=1
+)
 
 # On enlève les colones inutiles
 cols_to_drop = [
