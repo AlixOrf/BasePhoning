@@ -55,7 +55,7 @@ params = {
 Et mettez y les paramètres qui vous interresse. Nous utilisons actuellement 
 - [Département](#département) 
 - [Etat administratif](#)
-- [Association](#)
+- [Association](#association)
 - [Activité principale](#activité-principale)
 - [Tranche effectif salarié](#)
 - [Nature juridique](#)
@@ -824,15 +824,15 @@ Exemple :
 "code_collectivite_territoriale": "75C"
 ```
 
-#### **Convention collective renseignée**	
+#### **Convention collective**	
 Entreprises ayant au moins un établissement dont la convention collective est renseignée.
 
 Exemple :
 ```bash
-"convention_collective_renseignee": "true false"
+"convention_collective_renseignee": "true"
 ```
 
-#### **code_postal**	
+#### **Code postal**	
 Code postal en 5 chiffres.
 
 Exemple : 
@@ -872,7 +872,242 @@ Exemple :
 "epci": "200058519,248100737"
 ```
 
+#### **Egapro**	
+Uniquement les entreprises ayant un index égapro renseigné
 
+Exemple :
+```bash
+"egapro_renseignee": "true"
+```
+
+#### **Relations Fournisseurs et Achats Responsables (RFAR)**	
+Uniquemement les entreprises ayant le label Relations Fournisseurs et Achats Responsables (RFAR).
+
+Exemple :
+```bash
+"est_achats_responsables": "true"
+```
+
+#### **Alim'Confiance**
+Uniquement les entreprises ayant au moins un établissement avec un résultat de contrôle sanitaire Alim'Confiance.
+
+Exemple :
+```bash
+"est_alim_confiance": "true"
+```
+
+#### **Association**
+Uniquement les entreprises ayant un identifiant d'association ou une nature juridique avec mention "association" (5195, 9210, 9220, 9221, 9222, 9223, 9224, 9230, 9240, 9260).
+
+Exemple : 
+est_association: true false
+
+est_bio	
+boolean
+Enum: true false
+Uniquement les entreprises ayant un établissement certifié par l'agence bio
+
+est_collectivite_territoriale	
+boolean
+Enum: true false
+Uniquement les collectivités territoriales.
+
+est_entrepreneur_individuel	
+boolean
+Enum: true false
+Uniquement les entreprises individuelles.
+
+est_entrepreneur_spectacle	
+boolean
+Enum: true false
+Uniquement les entreprises ayant une licence d'entrepreneur du spectacle.
+
+est_ess	
+boolean
+Enum: true false
+Uniquement les entreprises appartenant au champ de l'économie sociale et solidaire.
+
+est_finess	
+boolean
+Enum: true false
+Uniquement les entreprises du domaine sanitaire et social (FINESS). Recherche à la fois dans les identifiants FINESS Géographiques des établissements et FINESS Juridiques des entreprises.
+
+est_organisme_formation	
+boolean
+Enum: true false
+Uniquement les entreprises ayant un établissement organisme de formation
+
+est_patrimoine_vivant	
+boolean
+Enum: true false
+Uniquement les entreprises ayant le label Entreprise du Patrimoine Vivant (EPV)
+
+est_qualiopi	
+boolean
+Enum: true false
+Uniquement les entreprises ayant ayant une certification de la marque « Qualiopi »
+
+est_rge	
+boolean
+Enum: true false
+Uniquement les entreprises reconnues garantes de l'Environnement (RGE).
+
+est_siae	
+boolean
+Enum: true false
+Uniquement les structures d'insertion par l'activité économique (SIAE).
+
+est_administration	
+boolean
+Enum: true false
+Uniquement les structures reconnues comme administration. Attention : Ce filtre se base sur cette liste ici. Ce filtre n'est pas exhaustif et peut retourner des faux positifs.
+
+est_societe_mission	
+boolean
+Enum: true false
+Uniquement les sociétés qui appartiennent au champ des sociétés à mission.
+
+est_uai	
+boolean
+Enum: true false
+Uniquement les entreprises ayant un établissement UAI (Unité Administrative Immatriculée).
+
+etat_administratif	
+string
+Enum: "A" "C"
+État administratif de l'unité légale. "A" pour Active, "C" pour Cessée.
+
+id_convention_collective	
+string
+Example: id_convention_collective=1090
+Identifiant de Convention Collective d'un établissement d'une entreprise.
+
+id_finess	
+string
+Example: id_finess=010003853
+Identifiant FINESS Géographique d'un établissement (9 chiffres). Cette recherche interroge uniquement les FINESS Géographiques des établissements.
+
+id_rge	
+string
+Example: id_rge=8611M10D109
+Identifiant RGE (reconnues garantes de l'Environnement) d'un établissement d'une entreprise.
+
+id_uai	
+string
+Example: id_uai=0022004T
+Identifiant UAI d'un établissement d'une entreprise.
+
+nature_juridique	
+string
+Example: nature_juridique=7344,6544
+Catégorie juridique de l'unité légale. Ce paramètre accepte une valeur unique ou une liste de valeurs séparées par des virgules.
+
+section_activite_principale	
+string
+Example: section_activite_principale=A,J,U
+Section de l'activité principale :
+
+A - Agriculture, sylviculture et pêche
+B - Industries extractives
+C - Industrie manufacturière
+D - Production et distribution d'électricité, de gaz, de vapeur et d'air conditionné
+E - Production et distribution d'eau ; assainissement, gestion des déchets et dépollution
+F - Construction
+G - Commerce ; réparation d'automobiles et de motocycles
+H - Transports et entreposage
+I - Hébergement et restauration
+J - Information et communication
+K - Activités financières et d'assurance
+L - Activités immobilières
+M - Activités spécialisées, scientifiques et techniques
+N - Activités de services administratifs et de soutien
+O - Administration publique
+P - Enseignement
+Q - Santé humaine et action sociale
+R - Arts, spectacles et activités récréatives
+S - Autres activités de services
+T - Activités des ménages en tant qu'employeurs ; activités indifférenciées des ménages en tant que producteurs de biens et services pour usage propre
+U - Activités extra-territoriales
+Ce paramètre accepte une valeur unique ou une liste de valeurs séparées par des virgules.
+
+tranche_effectif_salarie	
+string
+Example: tranche_effectif_salarie=NN,00,01
+Tranche d'effectif salarié de l'entreprise. Ce paramètre accepte une valeur unique ou une liste de valeurs séparées par des virgules.
+
+nom_personne	
+string
+Example: nom_personne=Dupont
+Nom d'une personne partie prenante de l'entreprise (dirigeant ou élu).
+
+prenoms_personne	
+string
+Example: prenoms_personne=Monsieur
+Prenom(s) d'une personne partie prenante de l'entreprise (dirigeant ou élu).
+
+date_naissance_personne_min	
+string <date>
+Example: date_naissance_personne_min=1960-01-01
+Valeur minimale de la date de naissance d'une personne partie prenante de l'entreprise (dirigeant ou élu).
+
+date_naissance_personne_max	
+string <date>
+Example: date_naissance_personne_max=1990-01-01
+Valeur maximale de la date de naissance d'une personne partie prenante de l'entreprise (dirigeant ou élu).
+
+type_personne	
+string
+Enum: "dirigeant" "elu"
+Type de la partie prenante de l'entreprise, dirigeant ou élu.
+
+ca_min	
+integer
+Example: ca_min=100000
+Valeur minimale du chiffre d'affaire de l'entreprise
+
+ca_max	
+integer
+Example: ca_max=100000
+Valeur maximale du chiffre d'affaire de l'entreprise
+
+resultat_net_min	
+integer
+Example: resultat_net_min=100000
+Valeur minimale du résultat net de l'entreprise
+
+resultat_net_max	
+integer
+Example: resultat_net_max=100000
+Valeur maximale du résultat net de l'entreprise
+
+limite_matching_etablissements	
+integer
+Default: 10
+Nombre d'établissements connexes inclus dans la réponse (matching_etablissements). Valeur entre 1 et 100.
+
+minimal	
+boolean
+Enum: true false
+Permet de retourner une réponse minmale, qui exclut les champs secondaires. Voir "include" pour en savoir plus.
+
+include	
+string
+Example: include=siege,complements
+ATTENTION : Ce paramètre ne peut être appelé qu'avec le champ "minimal=True".
+
+Permet de ne demander que certains des champs secondaires.
+
+Valeurs possibles :
+
+complements
+dirigeants
+finances
+matching_etablissements
+siege
+score
+Par défaut tous les champs sont inclus sauf le score.
+
+Ce paramètre accepte une valeur unique ou une liste de valeurs séparées par des virgules.
 
 ## **Base de données**
 
