@@ -54,7 +54,7 @@ params = {
 ```
 Et mettez y les paramètres qui vous interresse. Nous utilisons actuellement 
 - [Département](#département) 
-- [Etat administratif](#)
+- [Etat administratif](#état-administratif)
 - [Association](#association)
 - [Activité principale](#activité-principale)
 - [Tranche effectif salarié](#)
@@ -965,7 +965,7 @@ Uniquement les entreprises ayant le label Entreprise du Patrimoine Vivant (EPV)
 
 Exemple :
 ```bash
-est_patrimoine_vivant: true false
+"est_patrimoine_vivant": "true"
 ```
 
 #### **Qualiopi**
@@ -973,7 +973,7 @@ Uniquement les entreprises ayant ayant une certification de la marque « Qualiop
 
 Exemple :
 ```bash
-est_qualiopi: true false
+"est_qualiopi": "true"
 ```
 
 #### **RGE**
@@ -981,7 +981,7 @@ Uniquement les entreprises reconnues garantes de l'Environnement (RGE).
 
 Exemple :
 ```bash
-est_rge: true false
+"est_rge": "true"
 ```
 
 #### **SIAE**
@@ -989,49 +989,69 @@ Uniquement les structures d'insertion par l'activité économique (SIAE).
 
 Exemple :
 ```bash
-est_siae: true false
+"est_siae": "true"
 ```
 
-
-est_administration	
-boolean
-Enum: true false
+#### **Administration**
 Uniquement les structures reconnues comme administration. Attention : Ce filtre se base sur cette liste ici. Ce filtre n'est pas exhaustif et peut retourner des faux positifs.
 
-est_societe_mission	
-boolean
-Enum: true false
+Exemple :
+```bash
+"est_administration": "true"
+```
+
+#### **Sociétés à mission**
 Uniquement les sociétés qui appartiennent au champ des sociétés à mission.
 
-est_uai	
-boolean
-Enum: true false
+Exemple :
+```bash
+"est_societe_mission": "true"
+```
+
+#### **Unité Administrative Immatriculée**
 Uniquement les entreprises ayant un établissement UAI (Unité Administrative Immatriculée).
 
-etat_administratif	
-string
-Enum: "A" "C"
+Exemple :
+```bash
+"est_uai": "true"
+```
+
+#### **État administratif**
 État administratif de l'unité légale. "A" pour Active, "C" pour Cessée.
 
-id_convention_collective	
-string
-Example: id_convention_collective=1090
+Exemple :
+```bash
+"etat_administratif": "A"
+```
+
+#### **Identifiant de Convention Collective**	
 Identifiant de Convention Collective d'un établissement d'une entreprise.
 
-id_finess	
-string
-Example: id_finess=010003853
+Exemple :
+```bash
+"id_convention_collective" : "1090"
+```
+
+#### **Identifiant FINESS Géographique**
 Identifiant FINESS Géographique d'un établissement (9 chiffres). Cette recherche interroge uniquement les FINESS Géographiques des établissements.
 
-id_rge	
-string
-Example: id_rge=8611M10D109
+Exemple :
+```bash
+"id_finess": "010003853"
+```
+
+#### **Identifiant RGE**
 Identifiant RGE (reconnues garantes de l'Environnement) d'un établissement d'une entreprise.
 
-id_uai	
-string
-Example: id_uai=0022004T
+Exemple :
+```bash
+"id_rge": "8611M10D109"
+```
+
+#### **Identifiant UAI**
 Identifiant UAI d'un établissement d'une entreprise.
+Example: id_uai=0022004T
+
 
 nature_juridique	
 string
