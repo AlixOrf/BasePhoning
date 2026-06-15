@@ -14,7 +14,6 @@ params = {
     #"nature_juridique" : "", # Nature de l'entreprise (cf README)
     "date_naissance_personne_min" : "1954-01-01", # Les personne de moins de 72 ans (repasser derrière)
     "date_naissance_personne_max" : "1972-01-01", # Les personne de plus de 54 ans (repasser derrière)
-    "etab_est_siege" : "true",
     "per_page": 25,
     "page": 1  
 }
@@ -143,17 +142,11 @@ mask_exclude = (
     (df_raw["complements_est_ess"] == "VRAI") |
     (df_raw["complements_est_administration"] == "VRAI") |
     (df_raw["etab_est_siege"] == "FALSE") |
-    (df_raw["dirigeant_annee_de_naissance"] < "1954") |
+    # (df_raw["dirigeant_annee_de_naissance"] < "1954") |
     (df_raw["dirigeant_annee_de_naissance"] > "1972")
 )
 df_raw = df_raw[~mask_exclude].reset_index(drop=True)
 
-# On enlève les colonnes inutiles
-cols_to_drop = [
-    "sigle","annee_categorie_entreprise","date_fermeture","date_mise_a_jour","date_mise_a_jour_insee","date_mise_a_jour_rne","statut_diffusion","etab_date_fermeture","etab_etat_administratif","etab_liste_id_organisme_formation","etab_liste_rge","etab_liste_uai","etab_region","etab_siret","etab_statut_diffusion_etablissement","complements_collectivite_territoriale","complements_convention_collective_renseignee","complements_liste_idcc","complements_liste_finess_juridique","complements_egapro_renseignee","complements_est_achats_responsables","complements_est_alim_confiance","complements_est_bio","complements_est_entrepreneur_individuel","complements_liste_id_organisme_formation","complements_identifiant_association","complements_statut_entrepreneur_spectacle","complements_collectivite_territoriale.code","complements_collectivite_territorialaire.code_insee","complements_collectivite_territoriale.elus","complements_collectivite_territoriale.niveau"
-]
-
-df_raw = df_raw.drop(columns=[c for c in cols_to_drop if c in df_raw.columns], errors="ignore")
 
 # On enlève les doublons (il devrait pas en avoir)
 if "siren" in df_raw.columns:
