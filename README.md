@@ -5,10 +5,10 @@ La Base Phoning, n'ayant pour le moment pas de meilleur nom, est la base de donn
 
 - [Prérequis](#prérequis)
 - [Installation](#installation)
-- [Base de données](#base-de-données)
 - [API](#api)
     - [Importation](#importation)
     - [Filtres](#filtres)
+- [Base de données](#base-de-données)
 - [Fonctionnalités](#fonctionnalités)
 - [Contributeurs](#contributeurs)
 
@@ -900,62 +900,98 @@ Exemple :
 Uniquement les entreprises ayant un identifiant d'association ou une nature juridique avec mention "association" (5195, 9210, 9220, 9221, 9222, 9223, 9224, 9230, 9240, 9260).
 
 Exemple : 
-est_association: true false
+```bash
+"est_association": "true"
+```
 
-est_bio	
-boolean
-Enum: true false
+#### **Bio**
 Uniquement les entreprises ayant un établissement certifié par l'agence bio
 
-est_collectivite_territoriale	
-boolean
-Enum: true false
+Exemple : 
+```bash
+"est_bio": "true"
+```
+
+#### **Collectivités territoriales**
 Uniquement les collectivités territoriales.
 
-est_entrepreneur_individuel	
-boolean
-Enum: true false
+Exemple :
+```bash
+"est_collectivite_territoriale": "true"
+```
+
+#### **Entreprises individuelles**
 Uniquement les entreprises individuelles.
 
-est_entrepreneur_spectacle	
-boolean
-Enum: true false
+Exemple :
+```bash
+"est_entrepreneur_individuel": "true"
+```
+
+#### **Entrepreneur du spectacle**
 Uniquement les entreprises ayant une licence d'entrepreneur du spectacle.
 
-est_ess	
-boolean
-Enum: true false
+Exemple :
+```bash
+"est_entrepreneur_spectacle": "true"
+```
+
+#### **Economie Sociale et Solidaire**
 Uniquement les entreprises appartenant au champ de l'économie sociale et solidaire.
 
-est_finess	
-boolean
-Enum: true false
+Exemple :
+```bash
+"est_ess": "true"
+```
+
+#### **FINESS**
 Uniquement les entreprises du domaine sanitaire et social (FINESS). Recherche à la fois dans les identifiants FINESS Géographiques des établissements et FINESS Juridiques des entreprises.
 
-est_organisme_formation	
-boolean
-Enum: true false
+Exemple :
+```bash
+"est_finess": "true"
+```
+
+#### **Organisme de formation**
 Uniquement les entreprises ayant un établissement organisme de formation
 
-est_patrimoine_vivant	
-boolean
-Enum: true false
+Exemple :
+```bash
+"est_organisme_formation": "true"
+```
+
+#### **Entreprise du Patrimoine Vivant**
 Uniquement les entreprises ayant le label Entreprise du Patrimoine Vivant (EPV)
 
-est_qualiopi	
-boolean
-Enum: true false
+Exemple :
+```bash
+est_patrimoine_vivant: true false
+```
+
+#### **Qualiopi**
 Uniquement les entreprises ayant ayant une certification de la marque « Qualiopi »
 
-est_rge	
-boolean
-Enum: true false
+Exemple :
+```bash
+est_qualiopi: true false
+```
+
+#### **RGE**
 Uniquement les entreprises reconnues garantes de l'Environnement (RGE).
 
-est_siae	
-boolean
-Enum: true false
+Exemple :
+```bash
+est_rge: true false
+```
+
+#### **SIAE**
 Uniquement les structures d'insertion par l'activité économique (SIAE).
+
+Exemple :
+```bash
+est_siae: true false
+```
+
 
 est_administration	
 boolean
