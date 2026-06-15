@@ -7,6 +7,8 @@ La Base Phoning, n'ayant pour le moment pas de meilleur nom, est la base de donn
 - [Installation](#installation)
 - [Base de données](#base-de-données)
 - [API](#api)
+    - [Importation](#importation)
+    - [Filtres](#filtres)
 - [Fonctionnalités](#fonctionnalités)
 - [Contributeurs](#contributeurs)
 
@@ -39,25 +41,36 @@ Nous utilisons pour l'extraction des données cette API publique : [API Recherch
 Cette API permet à tout le monde de rechercher et de trouver une entreprise française. Elle ne permet pas d'accèder aux données complètes de la base Sirene, mais uniquement de rechercher une entreprise, par sa dénomination ou son adresse. Elle propose un grand nombre de critères de recherche, en particulier la dénomination, l’adresse et les dirigeants ou élus.
 L'API accepte au maximum 7 requêtes par seconde par adresse IP. Une limite de 30 requêtes par seconde par ASN est aussi en place.
 
-### **Filtres**
-Pour filtrer, definissez d'abord la base de l'url :
+### **Importation**
+Definissez d'abord la base de l'url :
 ```bash
 base_url = "https://recherche-entreprises.api.gouv.fr/search"
 ```
-Puis ouvrez les paramètres :
+
+### **Filtres**
+Pour filtrer, ouvrez les paramètres :
 ```bash
 params = {
 ```
-Et mettez y les paramètres qui vous interresse.
+Et mettez y les paramètres qui vous interresse. Nous utilisons actuellement 
+- [Département](#département) 
+- [Etat administratif](#)
+- [Association](#)
+- [Activité principale](#activité-principale)
+- [Tranche effectif salarié](#)
+- [Nature juridique](#)
+- [Date de naissance](#)
 
 #### **Recherche textuelle**
 Recherche textuelle (dénomination et/ou adresse, dirigeants, élus) ou recherche directe (SIREN, SIRET).
+
 Exemple :
 ```bash
 "q": "la poste"
 ```
 #### **Activité principale**
 Le code NAF ou code APE, un code d'activité suivant la nomenclature de l'INSEE.
+
 Exemple :
 ```bash
  "activite_principale": "09.10Z,09.90Z,10.11Z"
@@ -797,10 +810,68 @@ En juin 2026 date de la création de ces codes, les codes NAF sont les suivants 
 
 #### **Catégorie d'entreprise**
 Catégorie d'entreprise de l'unité légale. Cela peut être une PME (Petite ou Moyenne Entreprise), une ETI (Entreprises de Taille Intermédiaire), ou une GE (Grande Entreprise).
+
 Exemple :
 ```bash
 "categorie_entreprise": "PME"
 ```
+
+#### **Code de collectivité territoriale**	
+Code affilié à une collectivité territoriale (Commune - code INSEE, EPCI - n° SIREN, Département - Code INSEE + "D" (sauf cas particulier), Région - Code INSEE)
+
+Exemple : 
+```bash
+"code_collectivite_territoriale": "75C"
+```
+
+#### **Convention collective renseignée**	
+Entreprises ayant au moins un établissement dont la convention collective est renseignée.
+
+Exemple :
+```bash
+"convention_collective_renseignee": "true false"
+```
+
+#### **code_postal**	
+Code postal en 5 chiffres.
+
+Exemple : 
+```bash
+"code_postal": "38540,38189"
+```
+
+#### **Code commune**	
+Code commune (INSEE) en 5 caractères.
+
+Exemple :
+```bash
+"code_commune": "01247,01111"
+```
+
+#### **Département**
+Code de département en deux ou trois chiffres.
+
+Exemple :
+```bash
+"departement": "74"
+```
+
+#### **Région**	
+Code de région en deux chiffres.
+
+Example :
+```bash
+"region": "11,76"
+```
+
+#### **EPCI**
+Liste des epci valides.
+
+Exemple :
+```bash
+"epci": "200058519,248100737"
+```
+
 
 
 ## **Base de données**
