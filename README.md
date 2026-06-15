@@ -1467,7 +1467,7 @@ Exemple :
 "minimal": "true"
 ```
 
-#### **Inclus
+#### **Inclus**
 ATTENTION : Ce paramètre ne peut être appelé qu'avec le champ "minimal=True". Il permet de ne demander que certains des champs secondaires.
 Valeurs possibles :
 - complements
@@ -1483,6 +1483,48 @@ Exemple :
 "include" : "siege,complements"
 ```
 
+#### **Latitude**
+Latitude de l’établissement (source : la majorité des SIRET utilisent le géocodage provenant de la base SIRENE géocodée par l’INSEE pour les études statistiques, à l’exception des entreprises créées au cours des derniers mois, pour lesquelles la géolocalisation est directement extraite de la base SIRENE).
+
+#### **Longitude**
+Longitude de l'établissement (source : la majorité des SIRET utilisent le géocodage provenant de la base SIRENE géocodée par l’INSEE pour les études statistiques, à l’exception des entreprises créées au cours des derniers mois, pour lesquelles la géolocalisation est directement extraite de la base SIRENE).
+
+#### **Radius**	
+Radius de recherche, inférieur ou égal à 50km.
+
+### **Pagination**
+
+#### **Page**
+Le numéro de la page à retourner.
+
+Exemple :
+```bash
+"page": 1
+```
+
+#### **Par page**
+Le nombre de résultats par page, limité à 25.
+
+Exemple :
+```bash
+"per_page": 10
+```
+
+#### **Numéro de page pour la pagination des établissements connexes**
+Numéro de page pour la pagination des établissements connexes (matching_etablissements).
+
+Exemple :
+```bash
+"page_etablissements": 1
+```
+
+#### **Par taille
+Permet de trier les résultats par taille d'entreprise (nombre d'établissements).
+
+Exemple :
+```bash
+"sort_by_size": "true"
+```
 
 ## **Base de données**
 
