@@ -52,14 +52,14 @@ Pour filtrer, ouvrez les paramètres :
 ```bash
 params = {
 ```
-Et mettez y les paramètres qui vous interresse. Nous utilisons actuellement 
+Et mettez y les paramètres qui vous interresse. Nous utilisons actuellement :
 - [Département](#département) 
 - [Etat administratif](#état-administratif)
 - [Association](#association)
 - [Activité principale](#activité-principale)
-- [Tranche effectif salarié](#)
-- [Nature juridique](#)
-- [Date de naissance](#)
+- [Tranche d'effectif salarié](#tranche-deffectif-salarié)
+- [Nature juridique](#nature-juridique)
+- [Date de naissance](#date-de-naissance)
 
 #### **Recherche textuelle**
 Recherche textuelle (dénomination et/ou adresse, dirigeants, élus) ou recherche directe (SIREN, SIRET).
@@ -1050,120 +1050,439 @@ Exemple :
 
 #### **Identifiant UAI**
 Identifiant UAI d'un établissement d'une entreprise.
-Example: id_uai=0022004T
 
+Exemple :
+```bash
+"id_uai" :"0022004T"
+```
 
-nature_juridique	
-string
-Example: nature_juridique=7344,6544
+#### **Nature juridique**	
 Catégorie juridique de l'unité légale. Ce paramètre accepte une valeur unique ou une liste de valeurs séparées par des virgules.
 
-section_activite_principale	
-string
-Example: section_activite_principale=A,J,U
-Section de l'activité principale :
+Exemple :
+```bash
+"nature_juridique": "7344,6544"
+```
+En juin 2026 date de la création de ces codes, les catégorie juridique sont les suivantes :
+```
+7229: '(Autre) Collectivité territoriale',
+7379: '(Autre) Établissement public administratif local',
+1900: '(Autre) Personne physique',
+7179: "(Autre) Service déconcentré de l'État à compétence territoriale",
+1700: 'Agent commercial',
+1300: 'Artisan',
+1100: 'Artisan-commerçant',
+5195: 'Association coopérative inscrite (droit local Alsace Moselle)',
+9224: 'Association d’avocats à responsabilité professionnelle individuelle',
+9260: 'Association de droit local (Bas-Rhin, Haut-Rhin et Moselle)',
+9220: 'Association déclarée',
+9221: 'Association déclarée d’insertion par l’économique',
+9230: 'Association déclarée, reconnue d’utilité publique',
+7323: 'Association foncière de remembrement',
+7322: 'Association foncière urbaine',
+9222: 'Association intermédiaire',
+9210: 'Association non déclarée',
+7321: 'Association syndicale autorisée',
+9150: 'Association syndicale libre',
+1800: 'Associé gérant de Société',
+8250: 'Assurance mutuelle agricole',
+7112: 'Autorité administrative ou publique indépendante',
+7111: 'Autorité constitutionnelle',
+7349: 'Autre établissement public local de coopération non spécialisé ou entente',
+7385: 'Autre établissement public national administratif à compétence territoriale limitée',
+7384: "Autre établissement public national d'enseignement",
+2900: 'Autre groupement de droit privé non doté de la personnalité morale',
+8290: 'Autre organisme mutualiste',
+8490: 'Autre organisme professionnel',
+6901: 'Autre personne de droit privé inscrite au registre du commerce et des sociétés',
+7490: 'Autre personne morale de droit administratif',
+3290: 'Autre personne morale de droit étranger',
+9900: 'Autre personne morale de droit privé',
+8190: 'Autre régime de prévoyance sociale',
+5560: "Autre SA coopérative à conseil d'administration",
+5660: 'Autre SA coopérative à directoire',
+5460: 'Autre SARL coopérative',
+6599: 'Autre société civile',
+6560: 'Autre société civile coopérative',
+6585: 'Autre société civile professionnelle',
+5194: 'Caisse (fédérale) de crédit mutuel',
+6100: 'Caisse d’Épargne et de Prévoyance',
+6596: 'Caisse de crédit agricole mutuel',
+5193: 'Caisse de crédit maritime mutuel',
+7363: 'Caisse de crédit municipal',
+5196: "Caisse d'épargne et de prévoyance à forme coopérative",
+7362: 'Caisse des écoles',
+6595: 'Caisse locale de crédit mutuel',
+7361: "Centre communal d'action sociale",
+7367: "Centre Intercommunal d'action sociale (CIAS)",
+8470: 'Centre technique industriel ou comité professionnel du développement économique',
+7225: "Collectivité et territoire d'Outre Mer",
+8310: "Comité central d'entreprise",
+8311: "Comité d'établissement",
+1200: 'Commerçant',
+7356: 'Commission syndicale pour la gestion des biens indivis des communes',
+7348: "Communauté d'agglomération",
+7346: 'Communauté de communes',
+7347: 'Communauté de villes',
+7343: 'Communauté urbaine',
+7312: 'Commune associée et commune déléguée',
+7210: 'Commune et commune nouvelle',
+9240: 'Congrégation',
+6316: "Coopérative d'utilisation de matériel agricole en commun (CUMA)",
+7220: 'Département',
+7342: 'District urbain',
+7190: 'Ecole nationale non dotée de la personnalité morale',
+7314: 'Ensemble urbain',
+1000: 'Entrepreneur individuel',
+7364: "Établissement d'hospitalisation",
+7450: 'Etablissement public administratif, cercle et foyer dans les armées',
+7430: "Établissement public des cultes d'Alsace-Lorraine",
+4140: 'Établissement public local à caractère industriel ou commercial',
+7373: 'Etablissement public local culturel',
+7331: "Établissement public local d'enseignement",
+7366: 'Établissement public local social et médico-social',
+7389: 'Établissement public national à caractère administratif',
+4110: "Établissement public national à caractère industriel ou commercial doté d'un comptable public",
+4120: "Établissement public national à caractère industriel ou commercial non doté d'un comptable public",
+7383: 'Établissement public national à caractère scientifique culturel et professionnel',
+7382: "Établissement public national ayant fonction d'administration centrale",
+3210: 'État, collectivité ou établissement public étranger',
+1600: 'Exploitant agricole',
+4130: 'Exploitant public',
+6598: 'Exploitation agricole à responsabilité limitée',
+2400: 'Fiducie',
+9300: 'Fondation',
+5520: "Fonds à forme sociétale à conseil d'administration",
+5620: 'Fonds à forme sociétale à directoire',
+6533: "Groupement agricole d'exploitation en commun (GAEC)",
+6535: 'Groupement agricole foncier',
+9970: 'Groupement de coopération sanitaire à gestion privée',
+7470: 'Groupement de coopération sanitaire à gestion publique',
+9223: "Groupement d'employeurs",
+6220: "Groupement d'intérêt économique (GIE)",
+7410: "Groupement d'intérêt public (GIP)",
+6210: "Groupement européen d'intérêt économique (GEIE)",
+6534: 'Groupement foncier agricole',
+6538: 'Groupement foncier et rural',
+6536: 'Groupement forestier',
+6537: 'Groupement pastoral',
+2120: 'Indivision avec personne morale',
+2110: 'Indivision entre personnes physiques',
+4160: 'Institution Banque de France',
+8510: 'Institution de prévoyance',
+8130: 'Institution de retraite complémentaire',
+8520: 'Institution de retraite supplémentaire',
+7351: 'Institution interdépartementale ou entente',
+7352: 'Institution interrégionale ou entente',
+7344: 'Métropole',
+7113: 'Ministère',
+8140: 'Mutualité sociale agricole',
+8210: 'Mutuelle',
+7371: "Office public d'habitation à loyer modéré (OPHLM)",
+1400: 'Officier public ou ministériel',
+8450: 'Ordre professionnel ou assimilé',
+3205: 'Organisation internationale',
+7381: 'Organisme consulaire',
+2700: 'Paroisse hors zone concordataire',
+7357: "Pôle d'équilibre territorial et rural (PETR)",
+7340: 'Pôle métropolitain',
+1500: 'Profession libérale',
+7378: "Régie d'une collectivité locale à caractère administratif",
+4150: "Régie d'une collectivité locale à caractère industriel ou commercial",
+8170: "Régime d'assurance chômage",
+8110: 'Régime général de la Sécurité Sociale',
+8150: 'Régime maladie des non-salariés non agricoles',
+8120: 'Régime spécial de Sécurité Sociale',
+8160: 'Régime vieillesse ne dépendant pas du régime général de la Sécurité Sociale',
+7230: 'Région',
+3110: "Représentation ou agence commerciale d'état ou organisme public étranger immatriculé au RCS",
+5599: 'SA à conseil d’administration (s.a.i.)',
+5699: 'SA à directoire (s.a.i.)',
+5505: "SA à participation ouvrière à conseil d'administration",
+5605: 'SA à participation ouvrière à directoire',
+5554: "SA coopérative (d'intérêt) maritime à conseil d'administration",
+5553: "SA coopérative artisanale à conseil d'administration",
+5653: 'SA coopérative artisanale à directoire',
+5552: "SA coopérative de commerçants-détaillants à conseil d'administration",
+5652: 'SA coopérative de commerçants-détaillants à directoire',
+5551: "SA coopérative de consommation à conseil d'administration",
+5651: 'SA coopérative de consommation à directoire',
+5543: "SA coopérative de construction à conseil d'administration",
+5643: 'SA coopérative de construction à directoire',
+5547: "SA coopérative de production de HLM à conseil d'administration",
+5555: "SA coopérative de transport à conseil d'administration",
+5655: 'SA coopérative de transport à directoire',
+5654: "SA coopérative d'intérêt maritime à directoire",
+5558: "SA coopérative ouvrière de production (SCOP) à conseil d'administration",
+5658: 'SA coopérative ouvrière de production (SCOP) à directoire',
+5530: "SA d’aménagement foncier et d’équipement rural (SAFER) à conseil d'administration",
+5542: "SA d’attribution à conseil d'administration",
+5532: "SA d’intérêt collectif agricole (SICA) à conseil d'administration",
+5642: "SA d'attribution à directoire",
+5548: "SA de crédit immobilier à conseil d'administration",
+5648: 'SA de crédit immobilier à directoire',
+5546: "SA de HLM à conseil d'administration",
+5646: 'SA de HLM à directoire',
+5515: "SA d'économie mixte à conseil d'administration",
+5615: "SA d'économie mixte à directoire",
+5632: "SA d'intérêt collectif agricole (SICA)",
+5525: "SA immobilière d’investissement à conseil d'administration",
+5625: "SA immobilière d'investissement à directoire",
+5522: "SA immobilière pour le commerce et l’industrie (SICOMI) à conseil d'administration",
+5622: "SA immobilière pour le commerce et l'industrie (SICOMI) à directoire",
+5631: "SA mixte d'intérêt agricole (SMIA)",
+5510: "SA nationale à conseil d'administration",
+5610: 'SA nationale à directoire',
+5559: "SA union de sociétés coopératives à conseil d'administration",
+5659: 'SA union de sociétés coopératives à directoire',
+5630: 'Safer anonyme à directoire',
+5453: 'SARL coopérative artisanale',
+5451: 'SARL coopérative de consommation',
+5443: 'SARL coopérative de construction',
+5455: 'SARL coopérative de transport',
+5454: "SARL coopérative d'intérêt maritime",
+5458: 'SARL coopérative ouvrière de production (SCOP)',
+5430: "SARL d’aménagement foncier et d'équipement rural (SAFER)",
+5442: "SARL d'attribution",
+5415: "SARL d'économie mixte",
+5432: "SARL d'intérêt collectif agricole (SICA)",
+5426: 'SARL immobilière de gestion',
+5422: "SARL immobilière pour le commerce et l'industrie (SICOMI)",
+5431: "SARL mixte d'intérêt agricole (SMIA)",
+5410: 'SARL nationale',
+5459: 'SARL union de sociétés coopératives',
+5498: 'SARL unipersonnelle',
+5710: 'SAS, société par actions simplifiée',
+6578: "SCP d'architectes",
+6561: "SCP d'avocats",
+6562: "SCP d'avocats aux conseils",
+6563: "SCP d'avoués d'appel",
+6569: 'SCP de commissaires aux comptes',
+6566: 'SCP de commissaires-priseurs',
+6568: 'SCP de conseils juridiques',
+6572: 'SCP de dentistes',
+6575: "SCP de directeurs de laboratoire d'analyse médicale",
+6577: 'SCP de géomètres experts',
+6567: 'SCP de greffiers de tribunal de commerce',
+6574: 'SCP de masseurs-kinésithérapeutes',
+6571: 'SCP de médecins',
+6565: 'SCP de notaires',
+6576: 'SCP de vétérinaires',
+6564: "SCP d'huissiers",
+6573: "SCP d'infirmiers",
+7341: 'Secteur de commune',
+7313: 'Section de commune',
+7120: "Service central d'un ministère",
+7160: "Service déconcentré à compétence nationale d'un ministère (hors Défense)",
+7172: "Service déconcentré de l'État à compétence (inter) départementale",
+7171: "Service déconcentré de l'État à compétence (inter) régionale",
+7372: "Service départemental d'incendie et de secours (SDIS)",
+7150: 'Service du ministère de la Défense',
+5499: 'Société à responsabilité limitée (sans autre indication)',
+5531: "Société anonyme mixte d'intérêt agricole (SMIA) à conseil d'administration",
+6551: 'Société civile coopérative de consommation',
+6543: 'Société civile coopérative de construction',
+6554: "Société civile coopérative d'intérêt maritime",
+6558: 'Société civile coopérative entre médecins',
+6542: "Société civile d'attribution",
+6589: 'Société civile de moyens',
+6521: 'Société civile de placement collectif immobilier (SCPI)',
+6597: "Société civile d'exploitation agricole",
+6532: "Société civile d'intérêt collectif agricole (SICA)",
+6539: 'Société civile foncière',
+6540: 'Société civile immobilière',
+6544: "Société civile immobilière d' accession progressive à la propriété",
+6541: 'Société civile immobilière de construction-vente',
+6588: 'Société civile laitière',
+3120: 'Société commerciale étrangère immatriculée au RCS',
+6317: 'Société coopérative agricole',
+5192: 'Société coopérative de banque populaire',
+5647: 'Société coopérative de production de HLM anonyme à directoire',
+2220: 'Société créée de fait avec personne morale',
+2210: 'Société créée de fait entre personnes physiques',
+6411: 'Société d’assurance à forme mutuelle',
+5191: 'Société de caution mutuelle',
+5470: 'Société de Participations Financières de Profession Libérale Société à responsabilité limitée (SPFPL SARL)',
+5570: "Société de Participations Financières de Profession Libérale Société anonyme à conseil d'administration (SPFPL SA à conseil d'administration)",
+5670: 'Société de Participations Financières de Profession Libérale Société anonyme à Directoire (SPFPL SA à directoire)',
+5370: 'Société de Participations Financières de Profession Libérale Société en commandite par actions (SPFPL SCA)',
+5770: 'Société de Participations Financières de Profession Libérale Société par actions simplifiée (SPFPL SAS)',
+5585: "Société d'exercice libéral à forme anonyme à conseil d'administration",
+5685: "Société d'exercice libéral à forme anonyme à directoire",
+5485: "Société d'exercice libéral à responsabilité limitée",
+5385: "Société d'exercice libéral en commandite par actions",
+5785: "Société d'exercice libéral par action simplifiée",
+5308: 'Société en commandite par actions',
+5309: 'Société en commandite par actions coopérative',
+5306: 'Société en commandite simple',
+5307: 'Société en commandite simple coopérative',
+5202: 'Société en nom collectif',
+5203: 'Société en nom collectif coopérative',
+2320: 'Société en participation avec personne morale',
+2385: 'Société en participation de professions libérales',
+2310: 'Société en participation entre personnes physiques',
+3220: 'Société étrangère non immatriculée au RCS',
+5800: 'Société européenne',
+5720: 'Société par actions simplifiée à associé unique ou société par actions simplifiée unipersonnelle',
+6511: 'Sociétés Interprofessionnelles de Soins Ambulatoires\xa0',
+9110: 'Syndicat de copropriété',
+8410: 'Syndicat de salariés',
+7365: 'Syndicat inter hospitalier',
+7345: 'Syndicat intercommunal à vocation multiple (SIVOM)',
+7353: 'Syndicat intercommunal à vocation unique (SIVU)',
+7354: 'Syndicat mixte fermé',
+7355: 'Syndicat mixte ouvert',
+8420: 'Syndicat patronal',
+6318: 'Union de sociétés coopératives agricoles',
+```
 
-A - Agriculture, sylviculture et pêche
-B - Industries extractives
-C - Industrie manufacturière
-D - Production et distribution d'électricité, de gaz, de vapeur et d'air conditionné
-E - Production et distribution d'eau ; assainissement, gestion des déchets et dépollution
-F - Construction
-G - Commerce ; réparation d'automobiles et de motocycles
-H - Transports et entreposage
-I - Hébergement et restauration
-J - Information et communication
-K - Activités financières et d'assurance
-L - Activités immobilières
-M - Activités spécialisées, scientifiques et techniques
-N - Activités de services administratifs et de soutien
-O - Administration publique
-P - Enseignement
-Q - Santé humaine et action sociale
-R - Arts, spectacles et activités récréatives
-S - Autres activités de services
-T - Activités des ménages en tant qu'employeurs ; activités indifférenciées des ménages en tant que producteurs de biens et services pour usage propre
-U - Activités extra-territoriales
-Ce paramètre accepte une valeur unique ou une liste de valeurs séparées par des virgules.
+#### **Section de l'activité principale**
+Section de l'activité principale.
 
-tranche_effectif_salarie	
-string
-Example: tranche_effectif_salarie=NN,00,01
-Tranche d'effectif salarié de l'entreprise. Ce paramètre accepte une valeur unique ou une liste de valeurs séparées par des virgules.
+Exemple :
+```bash
+"section_activite_principale": "A,J,U"
+```
+En juin 2026 date de la création de ces codes, les sections de l'activité principale sont les suivantes :
+```
+"A": "Agriculture, sylviculture et pêche",
+"B": "Industries extractives",
+"C": "Industrie manufacturière",
+"D": "Production et distribution d'électricité, de gaz, de vapeur et d'air conditionné",
+"E": "Production et distribution d'eau ; assainissement, gestion des déchets et dépollution",
+"F": "Construction",
+"G": "Commerce ; réparation d'automobiles et de motocycles",
+"H": "Transports et entreposage",
+"I": "Hébergement et restauration",
+"J": "Information et communication",
+"K": "Activités financières et d'assurance",
+"L": "Activités immobilières",
+"M":"Activités spécialisées, scientifiques et techniques",
+"N": "Activités de services administratifs et de soutien",
+"O": "Administration publique",
+"P": "Enseignement",
+"Q": "Santé humaine et action sociale",
+"R": "Arts, spectacles et activités récréatives",
+"S": "Autres activités de services",
+"T": "Activités des ménages en tant qu'employeurs ; activités indifférenciées des ménages en tant que producteurs de biens et services pour usage propre",
+"U": "Activités extra-territoriales"
+```
 
-nom_personne	
-string
-Example: nom_personne=Dupont
-Nom d'une personne partie prenante de l'entreprise (dirigeant ou élu).
+#### **Tranche d'effectif salarié**	
+Tranche d'effectif salarié de l'entreprise.
 
-prenoms_personne	
-string
-Example: prenoms_personne=Monsieur
-Prenom(s) d'une personne partie prenante de l'entreprise (dirigeant ou élu).
+Exemple :
+```bash
+"tranche_effectif_salarie": "NN,00,01"
+```
+En juin 2026 date de la création de ces codes, les tranches d'effectif salarié e sont les suivantes :
+```
+"NN": "Unité non employeuse (pas de salarié au cours de l'année de référence et pas d'effectif au 31/12)",
+00: "0 salarié (n'ayant pas d'effectif au 31/12 mais ayant employé des salariés au cours de l'année de référence)",
+1: "1 ou 2 salariés",
+2: "3 à 5 salariés",
+3: "6 à 9 salariés",
+11: "10 à 19 salariés",
+12: "20 à 49 salariés",
+21: "50 à 99 salariés",
+22: "100 à 199 salariés",
+31: "200 à 249 salariés",
+32: "250 à 499 salariés",
+41: "500 à 999 salariés",
+42: "1 000 à 1 999 salariés",
+51: "2 000 à 4 999 salariés",
+52: "5 000 à 9 999 salariés",
+53: "10 000 salariés et plus"
+```
 
-date_naissance_personne_min	
-string <date>
-Example: date_naissance_personne_min=1960-01-01
-Valeur minimale de la date de naissance d'une personne partie prenante de l'entreprise (dirigeant ou élu).
+#### **Nom et prénom(s)**	
+Nom ou prénom(s) d'une personne partie prenante de l'entreprise (dirigeant ou élu).
 
-date_naissance_personne_max	
-string <date>
-Example: date_naissance_personne_max=1990-01-01
-Valeur maximale de la date de naissance d'une personne partie prenante de l'entreprise (dirigeant ou élu).
+Exemple :
+```bash
+"nom_personne": "Dupont"
+```
+OU
+```bash
+"prenoms_personne": "Monsieur"
+```
 
-type_personne	
-string
-Enum: "dirigeant" "elu"
-Type de la partie prenante de l'entreprise, dirigeant ou élu.
+#### **Date de naissance**
+Valeur maximale ou minimale de la date de naissance d'une personne partie prenante de l'entreprise (dirigeant ou élu).Exemple :
 
-ca_min	
-integer
-Example: ca_min=100000
-Valeur minimale du chiffre d'affaire de l'entreprise
+Exemple :
+```bash
+"date_naissance_personne_min": "1960-01-01"
+```
+OU
+```bash
+"date_naissance_personne_max": "1990-01-01"
+```
 
-ca_max	
-integer
-Example: ca_max=100000
-Valeur maximale du chiffre d'affaire de l'entreprise
+#### **Type de la partie prenante**
+Type de la partie prenante de l'entreprise, dirigeant ou élu. 
 
-resultat_net_min	
-integer
-Example: resultat_net_min=100000
-Valeur minimale du résultat net de l'entreprise
+Exemple :
+```bash
+"type_personne": "dirigeant"
+```
 
-resultat_net_max	
-integer
-Example: resultat_net_max=100000
-Valeur maximale du résultat net de l'entreprise
+#### **Chiffre d'affaire**
+Valeur maximale ou minimale du chiffre d'affaire de l'entreprise
 
-limite_matching_etablissements	
-integer
-Default: 10
+Exemple :
+```bash
+"ca_min": "100000"
+```
+OU
+```bash
+"ca_max": "100000"
+```
+
+#### **Résultat net**	
+Valeur maximale ou minimale du résultat net de l'entreprise.
+
+Exemple :
+```bash
+"resultat_net_min": "100000"
+```
+OU
+```bash
+"resultat_net_max": "100000"
+```
+
+#### **Limite matching etablissements**	
 Nombre d'établissements connexes inclus dans la réponse (matching_etablissements). Valeur entre 1 et 100.
 
-minimal	
-boolean
-Enum: true false
-Permet de retourner une réponse minmale, qui exclut les champs secondaires. Voir "include" pour en savoir plus.
+Exemple :
+```bash
+"limite_matching_etablissements": "10"
+```
 
-include	
-string
-Example: include=siege,complements
-ATTENTION : Ce paramètre ne peut être appelé qu'avec le champ "minimal=True".
+#### **Minimum**
+Permet de retourner une réponse minmale, qui exclut les champs secondaires. CF [inclus](#inclus) pour en savoir plus.
 
-Permet de ne demander que certains des champs secondaires.
+Exemple :
+```bash
+"minimal": "true"
+```
 
+#### **Inclus
+ATTENTION : Ce paramètre ne peut être appelé qu'avec le champ "minimal=True". Il permet de ne demander que certains des champs secondaires.
 Valeurs possibles :
-
-complements
-dirigeants
-finances
-matching_etablissements
-siege
-score
+- complements
+- dirigeants
+- finances
+- matching_etablissements
+- siege
+- score
 Par défaut tous les champs sont inclus sauf le score.
 
-Ce paramètre accepte une valeur unique ou une liste de valeurs séparées par des virgules.
+Exemple :
+```bash
+"include" : "siege,complements"
+```
+
 
 ## **Base de données**
 
