@@ -8,6 +8,8 @@ La Base Phoning, n'ayant pour le moment pas de meilleur nom, est la base de donn
 - [API](#api)
     - [Importation](#importation)
     - [Filtres](#filtres)
+    - [Pagination](#pagination)
+- [Importation en Excel](#importation-en-excel)
 - [Base de données](#base-de-données)
 - [Fonctionnalités](#fonctionnalités)
 - [Contributeurs](#contributeurs)
@@ -1525,7 +1527,11 @@ Exemple :
 ```bash
 "sort_by_size": "true"
 ```
+## **Importation en Excel**
 
+La première étape pour la création de la base phoning est d'importer l'api en excel, pour ce faire nous avons créé différents code Python. 
+
+**importation_excel.py** : Ce code 
 ## **Base de données**
 
 ## **Fonctionnalités**
