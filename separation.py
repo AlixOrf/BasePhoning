@@ -3,9 +3,11 @@ import pandas as pd
 # Lecture des fichiers
 df_v10 = pd.read_excel("entreprises_siren_74_V10.xlsx")
 df_v11 = pd.read_excel("entreprises_siren_74_V11.xlsx")
+df_v13 = pd.read_excel("entreprises_siren_74_V13.xlsx")
+df_v14 = pd.read_excel("entreprises_siren_74_V14.xlsx")
 
 # Fusion des données
-df = pd.concat([df_v10, df_v11], ignore_index=True)
+df = pd.concat([df_v10, df_v11, df_v13, df_v14], ignore_index=True)
 
 # Remplacement des valeurs vides par "Personne morale"
 df["dirigeant_type_dirigeant"] = (
