@@ -3,8 +3,22 @@ import pandas as pd
 from pandas import json_normalize
 import time
 
-# Lecture du fichier de départ
-df_principal = pd.read_excel("entreprises_siren_74_V12pm.xlsx")
+# =========================
+# PARAMÈTRES
+# =========================
+
+FICHIER_ENTREE = "entreprises_siren_74_V12pm.xlsx"
+FICHIER_SORTIE = "entreprises_siren_74_final.xlsx"
+MAX_TOURS = 10
+
+base_url = "https://recherche-entreprises.api.gouv.fr/search"
+headers = {"accept": "application/json"}
+
+# =========================
+# CHARGEMENT DES DONNÉES
+# =========================
+
+df_principal = pd.read_excel(FICHIER_ENTREE)
 
 colonnes_dirigeant = [
     "dirigeant_nom",
@@ -29,16 +43,17 @@ df_principal["dirigeant_siren"] = (
     .str.replace(".0", "", regex=False)
 )
 
-base_url = "https://recherche-entreprises.api.gouv.fr/search"
-headers = {"accept": "application/json"}
+# =========================
+# BOUCLE PRINCIPALE
+# =========================
 
 tour = 1
 
-while True:
+while tour <= MAX_TOURS:
 
-    print(f"\n----- TOUR {tour} -----")
+    print(f"\n----- TOUR {tour}/{MAX_TOURS} -----")
 
-    # Lignes dont le dirigeant est une personne morale
+    # Sélection des personnes morales restantes
     masque_pm = (
         df_principal["dirigeant_type_dirigeant"]
         .fillna("")
@@ -50,11 +65,12 @@ while True:
 
     print(f"{nb_pm} personnes morales restantes")
 
-    # Fin si plus aucune personne morale
+    # Arrêt si plus aucune personne morale
     if nb_pm == 0:
+        print("Plus aucune personne morale à traiter.")
         break
 
-    # SIREN à rechercher
+    # Liste unique des SIREN à rechercher
     sirens = (
         df_principal.loc[masque_pm, "dirigeant_siren"]
         .dropna()
@@ -92,13 +108,16 @@ while True:
         except Exception as e:
             print(f"Erreur sur {siren} : {e}")
 
-    if len(all_results) == 0:
+    if not all_results:
         print("Aucun résultat trouvé.")
         break
 
+    # =========================
+    # TRANSFORMATION DES RÉSULTATS
+    # =========================
+
     df_raw = pd.DataFrame(all_results)
 
-    # Déplier les dirigeants
     if "dirigeants" in df_raw.columns:
 
         df_raw = df_raw.explode("dirigeants").reset_index(drop=True)
@@ -114,7 +133,6 @@ while True:
             axis=1
         )
 
-    # On garde uniquement les colonnes utiles
     colonnes_utiles = [
         "siren",
         "dirigeant_nom",
@@ -128,7 +146,8 @@ while True:
     ]
 
     colonnes_existantes = [
-        c for c in colonnes_utiles if c in df_raw.columns
+        c for c in colonnes_utiles
+        if c in df_raw.columns
     ]
 
     df_infos = df_raw[colonnes_existantes].copy()
@@ -141,7 +160,7 @@ while True:
         .str.replace(".0", "", regex=False)
     )
 
-    # Création d'un dictionnaire de recherche
+    # Dictionnaire de correspondance
     infos_dict = (
         df_infos
         .drop_duplicates(subset="siren")
@@ -149,7 +168,10 @@ while True:
         .to_dict("index")
     )
 
-    # Mise à jour uniquement des lignes concernées
+    # =========================
+    # MISE À JOUR DES DONNÉES
+    # =========================
+
     for index, row in df_principal.loc[masque_pm].iterrows():
 
         siren = row["dirigeant_siren"]
@@ -159,27 +181,25 @@ while True:
 
         infos = infos_dict[siren]
 
-        for colonne in [
-            "dirigeant_nom",
-            "dirigeant_prenoms",
-            "dirigeant_annee_de_naissance",
-            "dirigeant_date_de_naissance",
-            "dirigeant_qualite",
-            "dirigeant_nationalite",
-            "dirigeant_siren",
-            "dirigeant_type_dirigeant"
-        ]:
+        for colonne in colonnes_dirigeant:
 
             if colonne in infos:
                 df_principal.at[index, colonne] = infos[colonne]
 
     tour += 1
 
+# =========================
+# FIN DE TRAITEMENT
+# =========================
+
+if tour > MAX_TOURS:
+    print(f"\nLimite de {MAX_TOURS} tours atteinte.")
+
 # Export final
 df_principal.to_excel(
-    "entreprises_siren_74_final.xlsx",
+    FICHIER_SORTIE,
     index=False
 )
 
 print("\nTerminé.")
-print("Fichier créé : entreprises_siren_74_final.xlsx")
+print(f"Fichier créé : {FICHIER_SORTIE}")
