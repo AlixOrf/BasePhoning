@@ -15,6 +15,8 @@ class Entreprise(Base):
 
     nom = Column(String)
 
+    établissements = Column(Integer)
+
     activite_principale = Column(String)
 
     categorie_entreprise = Column(String)
