@@ -1,10 +1,10 @@
 import pandas as pd
 
 # Lecture des fichiers
-df_v10 = pd.read_excel("entreprises_siren_74_V10.xlsx")
-df_v11 = pd.read_excel("entreprises_siren_74_V11.xlsx")
-df_v13 = pd.read_excel("entreprises_siren_74_V13.xlsx")
-df_v14 = pd.read_excel("entreprises_siren_74_V14.xlsx")
+df_v10 = pd.read_excel("entreprises_siren_74_V1.xlsx")
+df_v11 = pd.read_excel("entreprises_siren_74_V2.xlsx")
+df_v13 = pd.read_excel("entreprises_siren_74_V3.xlsx")
+df_v14 = pd.read_excel("entreprises_siren_74_V4.xlsx")
 
 # Fusion des données
 df = pd.concat([df_v10, df_v11, df_v13, df_v14], ignore_index=True)
@@ -34,8 +34,8 @@ df_pm = df[
 ]
 
 # Export
-df_pp.to_excel("entreprises_siren_74_V12pp.xlsx", index=False)
-df_pm.to_excel("entreprises_siren_74_V12pm.xlsx", index=False)
+df_pp.to_excel("entreprises_siren_74_V5pp.xlsx", index=False)
+df_pm.to_excel("entreprises_siren_74_V5pm.xlsx", index=False)
 
 print(f"Personnes physiques : {len(df_pp)} lignes")
 print(f"Personnes morales   : {len(df_pm)} lignes")

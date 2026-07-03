@@ -161,7 +161,7 @@ if "siren" in df_raw.columns:
     df_raw = df_raw.drop_duplicates(subset="siren", keep="first")
 
 # Et on exporte
-output_file = "entreprises_siren_74_V11.xlsx"
+output_file = "entreprises_siren_74_V2.xlsx"
 df_raw.to_excel(output_file, index=False)
 
 print(f"Fichier créé : {output_file}")

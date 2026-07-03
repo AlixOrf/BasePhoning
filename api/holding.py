@@ -7,8 +7,8 @@ import time
 # PARAMÈTRES
 # =========================
 
-FICHIER_ENTREE = "entreprises_siren_74_V12pm.xlsx"
-FICHIER_SORTIE = "entreprises_siren_74_final.xlsx"
+FICHIER_ENTREE = "entreprises_siren_74_V5pm.xlsx"
+FICHIER_SORTIE = "entreprises_siren_74_V6.xlsx"
 MAX_TOURS = 10
 
 base_url = "https://recherche-entreprises.api.gouv.fr/search"
@@ -19,6 +19,11 @@ headers = {"accept": "application/json"}
 # =========================
 
 df_principal = pd.read_excel(FICHIER_ENTREE)
+if "dernier_dirigeant_siren_pm" not in df_principal.columns:
+    df_principal["dernier_dirigeant_siren_pm"] = None
+
+if "dernier_dirigeant_denomination_pm" not in df_principal.columns:
+    df_principal["dernier_dirigeant_denomination_pm"] = None
 
 colonnes_dirigeant = [
     "dirigeant_nom",
@@ -28,6 +33,7 @@ colonnes_dirigeant = [
     "dirigeant_qualite",
     "dirigeant_nationalite",
     "dirigeant_siren",
+    "dirigeant_denomination",
     "dirigeant_type_dirigeant"
 ]
 

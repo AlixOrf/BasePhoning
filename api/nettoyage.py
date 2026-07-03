@@ -1058,10 +1058,31 @@ act_dict = {
     "U": "Activités extra-territoriales"
 }
 
-print("Lecture du fichier Excel...")
-df = pd.read_excel("entreprises_siren_74_V12pp.xlsx")
-print(f"{len(df)} lignes chargées")
-print(f"{len(df.columns)} colonnes détectées")
+print("Lecture des fichiers Excel...")
+
+# Chargement des deux fichiers
+df1 = pd.read_excel("entreprises_siren_74_V12pp.xlsx")
+df2 = pd.read_excel("entreprises_siren_74_final.xlsx")
+
+print(f"Fichier 1 : {len(df1)} lignes")
+print(f"Fichier 2 : {len(df2)} lignes")
+
+# Fusion
+df = pd.concat([df1, df2], ignore_index=True)
+
+print(f"Après fusion : {len(df)} lignes")
+
+# Suppression des doublons sur le SIREN
+df["siren"] = df["siren"].astype(str).str.strip()
+
+avant = len(df)
+
+df = df.drop_duplicates(subset=["siren"], keep="first")
+
+apres = len(df)
+
+print(f"Doublons supprimés : {avant - apres}")
+print(f"Lignes restantes : {apres}")
 
 # On uniformise le format des codes NAF
 print("Remplacement des codes NAF...")
@@ -1147,11 +1168,37 @@ df["resultat_net_recent"] = df.apply(
     axis=1
 )
 
+df["dirigeant_annee_de_naissance"] = pd.to_numeric(
+    df["dirigeant_annee_de_naissance"],
+    errors="coerce"
+)
+
+mask_exclude = (
+    (df["complements_est_association"] == "VRAI") |
+    (df["complements_est_service_public"] == "VRAI") |
+    (df["complements_est_ess"] == "VRAI") |
+    (df["complements_est_administration"] == "VRAI") |
+    (df["etab_est_siege"] == "FALSE") |
+    (df["dirigeant_qualite"] == "Administrateur") |
+    (df["dirigeant_qualite"] == "Commissaire aux comptes suppléant") |
+    (df["dirigeant_qualite"] == "Liquidateur") |
+    (df["dirigeant_qualite"] == "Membre du conseil de surveillance") |
+    (df["dirigeant_qualite"] == "Membre du directoire") |
+    (df["dirigeant_qualite"] == "Président du conseil de surveillance") |
+    (df["dirigeant_qualite"] == "Membre") |
+    (df["dirigeant_qualite"] == "Commissaire aux comptes titulaire") |
+    (df["dirigeant_annee_de_naissance"] < 1954) |
+    (df["dirigeant_annee_de_naissance"] > 1972)
+)
+df = df[~mask_exclude].reset_index(drop=True)
+
 # On enlève les colones inutiles
 cols_to_drop = [
-    "nom_raison_sociale,etat_administratif,etab_nom_commercial,etab_caractere_employeur,etab_commune,etab_liste_enseignes,etab_epci,etab_est_siege,nombre_etablissements,complements_collectivite_territoriale.niveau","complements_collectivite_territoriale.code_insee","activite_principale_naf25","sigle","annee_categorie_entreprise","date_fermeture","date_mise_a_jour","date_mise_a_jour_insee","date_mise_a_jour_rne","statut_diffusion","etab_date_fermeture","etab_etat_administratif","etab_liste_id_organisme_formation","etab_liste_rge","etab_liste_uai","etab_region","etab_siret","etab_statut_diffusion_etablissement","complements_collectivite_territoriale","complements_convention_collective_renseignee","complements_liste_idcc","complements_liste_finess_juridique","complements_egapro_renseignee","complements_est_achats_responsables","complements_est_alim_confiance","complements_est_bio","complements_est_entrepreneur_individuel","complements_liste_id_organisme_formation","complements_identifiant_association","complements_statut_entrepreneur_spectacle","complements_collectivite_territoriale.code","complements_collectivite_territorialaire.code_insee","complements_collectivite_territoriale.elus","complements_collectivite_territoriale.niveau,activite_principale_naf25", "caractere_employeur", "annee_tranche_effectif_salarie", "dirigeant_nationalite", "dirigeant_siren", "dirigeant_denomination", "etab_activite_principale_naf25", "etab_ancien_siege", "etab_annee_tranche_effectif_salarie", "etab_geo_id", "etab_liste_finess", "etab_liste_id_bio", "etab_liste_idcc", "etab_tranche_effectif_salarie", "finances_2024.ca","finances_2024.resultat_net","finances_2023.ca","finances_2023.resultat_net","finances_2022.ca","finances_2022.resultat_net","finances_2025.ca","finances_2025.resultat_net","finances_2021.ca","finances_2021.resultat_net","finances_2017.ca","finances_2017.resultat_net","finances_2020.ca","finances_2020.resultat_net","finances_2018.ca","finances_2018.resultat_net","finances_2019.ca","finances_2019.resultat_net","finances_2016.ca","finances_2016.resultat_net","finances_2015.ca","finances_2015.resultat_net","complements_est_association","complements_est_avocat","complements_est_entrepreneur_spectacle","complements_est_ess", "complements_est_finess", "complements_est_organisme_formation", "complements_est_qualiopi", "complements_est_rge", "complements_est_siae", "complements_est_societe_mission", "complements_est_uai", "complements_est_patrimoine_vivant", "complements_bilan_ges_renseigne", "complements_type_siae", "complements_a_aide_minimis", "complements_a_aide_ademe", "complements_est_administration", "complements_est_service_public", "complements_est_l100_3", "etab_date_creation", "etab_date_debut_activite"
+    "etab_caractere_employeur,nom_raison_sociale,etat_administratif,etab_nom_commercial,etab_caractere_employeur,etab_commune,etab_liste_enseignes,etab_epci,etab_est_siege,nombre_etablissements,complements_collectivite_territoriale.niveau","complements_collectivite_territoriale.code_insee","activite_principale_naf25","sigle","annee_categorie_entreprise","date_fermeture","date_mise_a_jour","date_mise_a_jour_insee","date_mise_a_jour_rne","statut_diffusion","etab_date_fermeture","etab_etat_administratif","etab_liste_id_organisme_formation","etab_liste_rge","etab_liste_uai","etab_region","etab_siret","etab_statut_diffusion_etablissement","complements_collectivite_territoriale","complements_convention_collective_renseignee","complements_liste_idcc","complements_liste_finess_juridique","complements_egapro_renseignee","complements_est_achats_responsables","complements_est_alim_confiance","complements_est_bio","complements_est_entrepreneur_individuel","complements_liste_id_organisme_formation","complements_identifiant_association","complements_statut_entrepreneur_spectacle","complements_collectivite_territoriale.code","complements_collectivite_territorialaire.code_insee","complements_collectivite_territoriale.elus","complements_collectivite_territoriale.niveau,activite_principale_naf25", "caractere_employeur", "annee_tranche_effectif_salarie", "dirigeant_nationalite", "etab_activite_principale_naf25", "etab_ancien_siege", "etab_annee_tranche_effectif_salarie", "etab_geo_id", "etab_liste_finess", "etab_liste_id_bio", "etab_liste_idcc", "etab_tranche_effectif_salarie", "finances_2024.ca","finances_2024.resultat_net","finances_2023.ca","finances_2023.resultat_net","finances_2022.ca","finances_2022.resultat_net","finances_2025.ca","finances_2025.resultat_net","finances_2021.ca","finances_2021.resultat_net","finances_2017.ca","finances_2017.resultat_net","finances_2020.ca","finances_2020.resultat_net","finances_2018.ca","finances_2018.resultat_net","finances_2019.ca","finances_2019.resultat_net","finances_2016.ca","finances_2016.resultat_net","finances_2015.ca","finances_2015.resultat_net","complements_est_association","complements_est_avocat","complements_est_entrepreneur_spectacle","complements_est_ess", "complements_est_finess", "complements_est_organisme_formation", "complements_est_qualiopi", "complements_est_rge", "complements_est_siae", "complements_est_societe_mission", "complements_est_uai", "complements_est_patrimoine_vivant", "complements_bilan_ges_renseigne", "complements_type_siae", "complements_a_aide_minimis", "complements_a_aide_ademe", "complements_est_administration", "complements_est_service_public", "complements_est_l100_3", "etab_date_creation", "etab_date_debut_activite"
 ]
 df = df.drop(columns=[c for c in cols_to_drop if c in df.columns], errors="ignore")
+
+
 
 # On sauvegarde
 df.to_excel("entreprises_siren_74_V2.xlsx", index=False)
