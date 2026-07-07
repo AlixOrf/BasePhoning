@@ -1,9 +1,19 @@
-from database.database import Base, engine
-import database.models
+import sys
+
+from PySide6.QtWidgets import QApplication
+
+from ui.main_window import MainWindow
+
 
 def main():
-    Base.metadata.create_all(bind=engine)
-    print("Base de données créée avec succès !")
+
+    app = QApplication(sys.argv)
+
+    fenetre = MainWindow()
+    fenetre.show()
+
+    sys.exit(app.exec())
+
 
 if __name__ == "__main__":
     main()

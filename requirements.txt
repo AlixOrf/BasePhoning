@@ -5,3 +5,4 @@ xlrd
 matplotlib 
 strealmit
 sqlalchemy
+PySide6
