@@ -54,18 +54,6 @@ def importer_excel(fichier):
                 if pd.isna(valeur):
                     donnees[cle] = None
 
-            # -------------------------
-            # Conversion de la colonne traite
-            # -------------------------
-
-            if donnees.get("traite") is not None:
-
-                valeur = str(donnees["traite"]).strip().lower()
-
-                if valeur in ["traité", "traite", "true", "1", "oui"]:
-                    donnees["traite"] = True
-                else:
-                    donnees["traite"] = False
 
             # -------------------------
             # Recherche SIREN
