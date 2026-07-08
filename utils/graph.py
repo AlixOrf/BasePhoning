@@ -113,3 +113,111 @@ if fichier is not None:
         st.write(
             f"Nombre de dirigeants avec année renseignée : {len(annees):,}"
         )
+
+        # =========================
+        # SECTEURS ACTIVITE
+        # =========================
+        if "section_activite_principale" in df.columns:
+
+            st.subheader("Top secteurs d'activité")
+
+            data = (
+                df["section_activite_principale"]
+                .fillna("Inconnu")
+                .value_counts()
+                .head(10)
+            )
+
+            fig, ax = plt.subplots(figsize=(10,6))
+
+            ax.barh(
+                data.index[::-1],
+                data.values[::-1]
+            )
+
+            ax.set_title("10 secteurs les plus représentés")
+
+            st.pyplot(fig)
+
+        # =========================
+        # TRANCHE EFFECTIF
+        # =========================
+        if "tranche_effectif_salarie" in df.columns:
+
+            st.subheader("Répartition des effectifs salariés")
+
+            data = (
+                df["tranche_effectif_salarie"]
+                .fillna("Inconnu")
+                .value_counts()
+            )
+
+            fig, ax = plt.subplots(figsize=(10,5))
+
+            ax.bar(
+                data.index,
+                data.values
+            )
+
+            ax.tick_params(axis='x', rotation=45)
+
+            st.pyplot(fig)
+
+        # =========================
+        # FORMES JURIDIQUES
+        # =========================
+        if "nature_juridique" in df.columns:
+
+            st.subheader("Formes juridiques")
+
+            data = (
+                df["nature_juridique"]
+                .fillna("Inconnu")
+                .value_counts()
+                .head(10)
+            )
+
+            fig, ax = plt.subplots(figsize=(10,6))
+
+            ax.barh(
+                data.index[::-1],
+                data.values[::-1]
+            )
+
+            st.pyplot(fig)
+
+        # =========================
+        # CARTE DES ETABLISSEMENTS
+        # =========================
+        if (
+            "etab_latitude" in df.columns
+            and "etab_longitude" in df.columns
+        ):
+
+            st.subheader("Carte des établissements")
+
+            carte = df[
+                [
+                    "etab_latitude",
+                    "etab_longitude"
+                ]
+            ].copy()
+
+            carte.columns = [
+                "lat",
+                "lon"
+            ]
+
+            carte["lat"] = pd.to_numeric(
+                carte["lat"],
+                errors="coerce"
+            )
+
+            carte["lon"] = pd.to_numeric(
+                carte["lon"],
+                errors="coerce"
+            )
+
+            carte = carte.dropna()
+
+            st.map(carte)

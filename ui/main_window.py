@@ -161,18 +161,6 @@ class MainWindow(QMainWindow):
             "Exporter"
         )
 
-        self.btn_ajouter = QPushButton(
-            "Ajouter"
-        )
-
-        self.btn_modifier = QPushButton(
-            "Modifier"
-        )
-
-        self.btn_supprimer = QPushButton(
-            "Supprimer"
-        )
-
 
         boutons.addWidget(
             self.btn_import
@@ -183,19 +171,6 @@ class MainWindow(QMainWindow):
         )
 
         boutons.addStretch()
-
-
-        boutons.addWidget(
-            self.btn_ajouter
-        )
-
-        boutons.addWidget(
-            self.btn_modifier
-        )
-
-        boutons.addWidget(
-            self.btn_supprimer
-        )
 
 
         layout.addLayout(

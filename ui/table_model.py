@@ -9,7 +9,7 @@ class EntrepriseTableModel(QStandardItemModel):
         "Commune",
         "Téléphone",
         "Traité",
-        "Departement"
+        "Code Postale",
     ]
 
     def __init__(self):
