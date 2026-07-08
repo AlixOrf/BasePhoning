@@ -8,7 +8,8 @@ class EntrepriseTableModel(QStandardItemModel):
         "Nom",
         "Commune",
         "Téléphone",
-        "Traité"
+        "Traité",
+        "Departement"
     ]
 
     def __init__(self):
@@ -28,7 +29,8 @@ class EntrepriseTableModel(QStandardItemModel):
                 QStandardItem(str(e.nom)),
                 QStandardItem(str(e.etab_libelle_commune)),
                 QStandardItem("" if e.telephone is None else str(e.telephone)),
-                QStandardItem("Oui" if e.traite else "Non"),
+                QStandardItem(str(e.traite)),
+                QStandardItem(str(e.etab_code_postal)),
             ]
 
             for item in ligne:

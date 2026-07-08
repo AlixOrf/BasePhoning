@@ -118,8 +118,14 @@ class FilterProxyModel(QSortFilterProxyModel):
                 return False
 
 
-            if str(valeur) not in valeurs:
+            if valeur is None or str(valeur).strip() == "":
+                valeur = "(Vide)"
 
+            else:
+                valeur = str(valeur)
+
+
+            if valeur not in valeurs:
                 return False
 
 

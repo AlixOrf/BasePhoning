@@ -83,4 +83,4 @@ class Entreprise(Base):
 
     telephone = Column(String)
 
-    traite = Column(Boolean, default=False)
+    traite = Column(String)

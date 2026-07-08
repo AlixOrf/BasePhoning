@@ -50,13 +50,10 @@ class FilterHeader(QHeaderView):
             column
         )
 
-
         if self.model_ref is None:
             return
 
-
         if self.proxy is None:
-            print("PAS DE PROXY")
             return
 
 
@@ -75,9 +72,14 @@ class FilterHeader(QHeaderView):
                 column
             )
 
-            valeur = str(
-                self.model_ref.data(index)
-            )
+            valeur = self.model_ref.data(index)
+
+
+            if valeur is None or str(valeur).strip() == "":
+                valeur = "(Vide)"
+
+            else:
+                valeur = str(valeur)
 
 
             if valeur not in valeurs:
@@ -87,6 +89,23 @@ class FilterHeader(QHeaderView):
 
         liste = QListWidget()
 
+
+        # Option Tous
+
+        tous = QListWidgetItem(
+            "Tous"
+        )
+
+        tous.setCheckState(
+            Qt.Checked
+        )
+
+        liste.addItem(
+            tous
+        )
+
+
+        # Valeurs
 
         for valeur in sorted(valeurs):
 
@@ -103,28 +122,32 @@ class FilterHeader(QHeaderView):
             )
 
 
-
         def appliquer():
 
             selection = []
 
 
             for i in range(
+                1,
                 liste.count()
             ):
 
                 item = liste.item(i)
 
-
                 if item.checkState() == Qt.Checked:
-
                     selection.append(
                         item.text()
                     )
 
 
+            # Tout sélectionné = pas de filtre
+
+            if len(selection) == len(valeurs):
+                selection = []
+
+
             print(
-                "ENVOI FILTRE :",
+                "FILTRE :",
                 column,
                 selection
             )
@@ -134,7 +157,6 @@ class FilterHeader(QHeaderView):
                 column,
                 selection
             )
-
 
 
         liste.itemChanged.connect(
@@ -150,14 +172,33 @@ class FilterHeader(QHeaderView):
             liste
         )
 
-
         menu.addAction(
             action
         )
 
 
+        # Position sous la colonne cliquée
+
+        x = self.sectionViewportPosition(
+            column
+        )
+
+        y = self.height()
+
+
+        position = self.viewport().mapToGlobal(
+            self.viewport().rect().topLeft()
+        )
+
+        position.setX(
+            position.x() + x
+        )
+
+        position.setY(
+            position.y() + y
+        )
+
+
         menu.exec(
-            self.mapToGlobal(
-                self.rect().bottomLeft()
-            )
+            position
         )
