@@ -15,6 +15,9 @@ from database.crud import recuperer_toutes_les_entreprises
 from ui.table_model import EntrepriseTableModel
 from ui.filter_proxy_model import FilterProxyModel
 from ui.filter_header import FilterHeader
+from datetime import datetime
+from ui.export_dialog import ExportDialog
+from exports.exportdb import exporter
 
 
 class MainWindow(QMainWindow):
@@ -196,4 +199,73 @@ class MainWindow(QMainWindow):
 
         self.model.charger(
             entreprises
+        )
+
+    def exporter_excel(self):
+
+        nb = self.proxy.rowCount()
+
+        if nb == 0:
+
+            QMessageBox.information(
+                self,
+                "Export",
+                "Aucune entreprise à exporter."
+            )
+
+            return
+
+        dialog = ExportDialog(nb, self)
+
+        if not dialog.exec():
+            return
+
+        personne = dialog.get_personne()
+
+        if personne is None:
+
+            QMessageBox.warning(
+                self,
+                "Export",
+                "Veuillez choisir Alain ou Stéphane."
+            )
+
+            return
+
+        nom = f"{personne}_{datetime.now():%Y-%m-%d}.xlsx"
+
+        fichier, _ = QFileDialog.getSaveFileName(
+            self,
+            "Exporter",
+            nom,
+            "Excel (*.xlsx)"
+        )
+
+        if not fichier:
+            return
+
+        entreprises = []
+
+        for row in range(self.proxy.rowCount()):
+
+            proxy_index = self.proxy.index(row, 0)
+
+            source = self.proxy.mapToSource(proxy_index)
+
+            entreprises.append(
+                self.model.get_entreprise(source.row())
+            )
+
+        exporter(
+            fichier,
+            entreprises,
+            personne
+        )
+
+        self.model.actualiser()
+
+        QMessageBox.information(
+            self,
+            "Export",
+            f"{len(entreprises)} entreprises exportées."
         )

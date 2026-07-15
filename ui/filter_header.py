@@ -3,7 +3,11 @@ from PySide6.QtWidgets import (
     QMenu,
     QWidgetAction,
     QListWidget,
-    QListWidgetItem
+    QListWidgetItem,
+    QPushButton,
+    QVBoxLayout,
+    QWidget,
+    QHBoxLayout
 )
 
 from PySide6.QtCore import Qt
@@ -21,6 +25,9 @@ class FilterHeader(QHeaderView):
         self.model_ref = None
         self.proxy = None
 
+        # mémorisation des filtres
+        self.checked_values = {}
+
 
     def set_model(self, model):
 
@@ -34,9 +41,7 @@ class FilterHeader(QHeaderView):
         )
 
         if index >= 0:
-
             self.open_menu(index)
-
             return
 
         super().mousePressEvent(event)
@@ -44,11 +49,6 @@ class FilterHeader(QHeaderView):
 
 
     def open_menu(self, column):
-
-        print(
-            "OUVERTURE FILTRE COLONNE :",
-            column
-        )
 
         if self.model_ref is None:
             return
@@ -63,9 +63,11 @@ class FilterHeader(QHeaderView):
         valeurs = []
 
 
-        for row in range(
-            self.model_ref.rowCount()
-        ):
+        # ======================
+        # Récupération valeurs
+        # ======================
+
+        for row in range(self.model_ref.rowCount()):
 
             index = self.model_ref.index(
                 row,
@@ -87,94 +89,186 @@ class FilterHeader(QHeaderView):
 
 
 
-        liste = QListWidget()
+        valeurs.sort()
 
 
         # ======================
-        # Option Tous
+        # Widget principal
+        # ======================
+
+        widget = QWidget()
+
+        layout = QVBoxLayout(widget)
+
+
+        liste = QListWidget()
+
+        layout.addWidget(liste)
+
+
+        # ======================
+        # Tous
         # ======================
 
         tous = QListWidgetItem("Tous")
+        tous.setFlags(
+            tous.flags() |
+            Qt.ItemIsUserCheckable
+        )
+
         tous.setCheckState(Qt.Checked)
+
         liste.addItem(tous)
+
+
 
         # ======================
         # Valeurs
         # ======================
 
-        for valeur in sorted(valeurs):
+
+        anciennes_valeurs = self.checked_values.get(
+            column,
+            None
+        )
+
+
+        for valeur in valeurs:
+
             item = QListWidgetItem(valeur)
-            item.setCheckState(Qt.Checked)
-            liste.addItem(item)
+
+            item.setFlags(
+                item.flags() |
+                Qt.ItemIsUserCheckable
+            )
 
 
-        # Empêche les boucles infinies
-        modification = False
-
-
-        def item_changed(item):
-            nonlocal modification
-
-            if modification:
-                return
-
-            modification = True
-
-            # --------------------------
-            # Si "Tous" change
-            # --------------------------
-
-            if item == tous:
-
-                etat = item.checkState()
-
-                for i in range(1, liste.count()):
-                    liste.item(i).setCheckState(etat)
-
-            # --------------------------
-            # Si une valeur change
-            # --------------------------
+            if anciennes_valeurs is None:
+                item.setCheckState(Qt.Checked)
 
             else:
 
-                tout_coche = True
+                if valeur in anciennes_valeurs:
+                    item.setCheckState(Qt.Checked)
 
-                for i in range(1, liste.count()):
-
-                    if liste.item(i).checkState() != Qt.Checked:
-                        tout_coche = False
-                        break
-
-                tous.setCheckState(
-                    Qt.Checked if tout_coche else Qt.Unchecked
-                )
-
-            modification = False
-
-            appliquer()
+                else:
+                    item.setCheckState(Qt.Unchecked)
 
 
-        liste.itemChanged.connect(item_changed)
+            liste.addItem(item)
 
 
-        action = QWidgetAction(
-            menu
+
+        # ======================
+        # Gestion Tous
+        # ======================
+
+
+        def changer_tous(item):
+
+            if item != tous:
+                return
+
+
+            etat = tous.checkState()
+
+
+            liste.blockSignals(True)
+
+
+            for i in range(1, liste.count()):
+
+                liste.item(i).setCheckState(etat)
+
+
+            liste.blockSignals(False)
+
+
+
+        liste.itemChanged.connect(changer_tous)
+
+
+
+        # ======================
+        # Boutons
+        # ======================
+
+        boutons = QHBoxLayout()
+
+
+        ok = QPushButton("OK")
+        annuler = QPushButton("Annuler")
+
+
+        boutons.addWidget(ok)
+        boutons.addWidget(annuler)
+
+
+        layout.addLayout(boutons)
+
+
+
+        action = QWidgetAction(menu)
+
+        action.setDefaultWidget(widget)
+
+        menu.addAction(action)
+
+
+
+        # ======================
+        # OK
+        # ======================
+
+        def appliquer():
+
+            selection = []
+
+
+            for i in range(1, liste.count()):
+
+                item = liste.item(i)
+
+                if item.checkState() == Qt.Checked:
+                    selection.append(item.text())
+
+
+            # sauvegarde état
+
+            self.checked_values[column] = selection
+
+
+            # applique filtre
+
+            self.proxy.setColumnFilter(
+                column,
+                selection
+            )
+
+
+            menu.close()
+
+
+
+        ok.clicked.connect(appliquer)
+
+
+
+        # ======================
+        # Annuler
+        # ======================
+
+        annuler.clicked.connect(
+            menu.close
         )
 
-        action.setDefaultWidget(
-            liste
-        )
-
-        menu.addAction(
-            action
-        )
 
 
-        # Position sous la colonne cliquée
+        # ======================
+        # Position
+        # ======================
 
-        x = self.sectionViewportPosition(
-            column
-        )
+        x = self.sectionViewportPosition(column)
 
         y = self.height()
 
@@ -182,6 +276,7 @@ class FilterHeader(QHeaderView):
         position = self.viewport().mapToGlobal(
             self.viewport().rect().topLeft()
         )
+
 
         position.setX(
             position.x() + x
@@ -192,6 +287,4 @@ class FilterHeader(QHeaderView):
         )
 
 
-        menu.exec(
-            position
-        )
+        menu.exec(position)
