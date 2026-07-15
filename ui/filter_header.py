@@ -90,78 +90,71 @@ class FilterHeader(QHeaderView):
         liste = QListWidget()
 
 
+        # ======================
         # Option Tous
+        # ======================
 
-        tous = QListWidgetItem(
-            "Tous"
-        )
+        tous = QListWidgetItem("Tous")
+        tous.setCheckState(Qt.Checked)
+        liste.addItem(tous)
 
-        tous.setCheckState(
-            Qt.Checked
-        )
-
-        liste.addItem(
-            tous
-        )
-
-
+        # ======================
         # Valeurs
+        # ======================
 
         for valeur in sorted(valeurs):
-
-            item = QListWidgetItem(
-                valeur
-            )
-
-            item.setCheckState(
-                Qt.Checked
-            )
-
-            liste.addItem(
-                item
-            )
+            item = QListWidgetItem(valeur)
+            item.setCheckState(Qt.Checked)
+            liste.addItem(item)
 
 
-        def appliquer():
-
-            selection = []
-
-
-            for i in range(
-                1,
-                liste.count()
-            ):
-
-                item = liste.item(i)
-
-                if item.checkState() == Qt.Checked:
-                    selection.append(
-                        item.text()
-                    )
+        # Empêche les boucles infinies
+        modification = False
 
 
-            # Tout sélectionné = pas de filtre
+        def item_changed(item):
+            nonlocal modification
 
-            if len(selection) == len(valeurs):
-                selection = []
+            if modification:
+                return
+
+            modification = True
+
+            # --------------------------
+            # Si "Tous" change
+            # --------------------------
+
+            if item == tous:
+
+                etat = item.checkState()
+
+                for i in range(1, liste.count()):
+                    liste.item(i).setCheckState(etat)
+
+            # --------------------------
+            # Si une valeur change
+            # --------------------------
+
+            else:
+
+                tout_coche = True
+
+                for i in range(1, liste.count()):
+
+                    if liste.item(i).checkState() != Qt.Checked:
+                        tout_coche = False
+                        break
+
+                tous.setCheckState(
+                    Qt.Checked if tout_coche else Qt.Unchecked
+                )
+
+            modification = False
+
+            appliquer()
 
 
-            print(
-                "FILTRE :",
-                column,
-                selection
-            )
-
-
-            self.proxy.setColumnFilter(
-                column,
-                selection
-            )
-
-
-        liste.itemChanged.connect(
-            appliquer
-        )
+        liste.itemChanged.connect(item_changed)
 
 
         action = QWidgetAction(

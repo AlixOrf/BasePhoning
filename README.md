@@ -1520,7 +1520,7 @@ Exemple :
 "page_etablissements": 1
 ```
 
-#### **Par taille
+#### **Par taille**
 Permet de trier les résultats par taille d'entreprise (nombre d'établissements).
 
 Exemple :
