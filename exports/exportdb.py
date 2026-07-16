@@ -20,7 +20,7 @@ def exporter(fichier, entreprises, personne):
 
                 "siren": e.siren,
                 "nom": e.nom,
-                "établissements": e.etablissements,
+                "établissements": e.établissements,
                 "activite_principale": e.activite_principale,
                 "categorie_entreprise": e.categorie_entreprise,
                 "date_creation": e.date_creation,
@@ -56,7 +56,7 @@ def exporter(fichier, entreprises, personne):
 
             if entreprise:
 
-                entreprise.traite = f"Traité par {personne}"
+                entreprise.traite = f"traité par {personne}"
 
         session.commit()
 

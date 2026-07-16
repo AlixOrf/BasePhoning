@@ -8,6 +8,8 @@ from PySide6.QtWidgets import (
     QLabel,
     QTableView,
     QHeaderView,
+    QMessageBox,
+    QFileDialog
 )
 
 from database.crud import recuperer_toutes_les_entreprises
@@ -163,7 +165,8 @@ class MainWindow(QMainWindow):
         self.btn_export = QPushButton(
             "Exporter"
         )
-
+        #self.btn_import.clicked.connect(self.importer_excel)   # si tu as cette fonction
+        self.btn_export.clicked.connect(self.exporter_excel)
 
         boutons.addWidget(
             self.btn_import
