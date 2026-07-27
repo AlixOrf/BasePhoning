@@ -1188,7 +1188,8 @@ mask_exclude = (
     (df["dirigeant_qualite"] == "Membre") |
     (df["dirigeant_qualite"] == "Commissaire aux comptes titulaire") |
     (df["dirigeant_annee_de_naissance"] < 1954) |
-    (df["dirigeant_annee_de_naissance"] > 1972)
+    (df["dirigeant_annee_de_naissance"] > 1972) |
+    (df["activite_principale"] == "Transports de voyageurs par taxis")
 )
 df = df[~mask_exclude].reset_index(drop=True)
 
