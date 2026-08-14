@@ -33,6 +33,12 @@ def generer_telephone(e, telephones_utilises):
 
 def exporter(fichier, entreprises, personne):
 
+    # Sécurité : aucune personne sélectionnée
+    if not personne:
+        raise ValueError(
+            "Aucune personne sélectionnée pour l'export."
+        )
+
     personne_lower = personne.lower()
 
     # ==========================================================

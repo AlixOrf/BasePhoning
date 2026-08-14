@@ -433,6 +433,118 @@ class EntrepriseDialog(QDialog):
                         "Traité",
                         "traite"
                     ),
+
+                    # ------------------------------
+                    # Appels / consultant
+                    # ------------------------------
+
+
+                    (
+                        "Consultant",
+                        "CONSULTANT"
+                    ),
+
+
+                    (
+                        "Numéro consultant",
+                        "NUMCONSULTANT"
+                    ),
+
+
+                    (
+                        "Total appels",
+                        "TOTAL_APPELS"
+                    ),
+
+
+                    (
+                        "Date appel",
+                        "DATE_APPEL"
+                    ),
+
+
+                    (
+                        "Durée",
+                        "DUREE"
+                    ),
+
+
+                    (
+                        "Accord",
+                        "ACCORD"
+                    ),
+
+
+                    (
+                        "Désaccord",
+                        "DESACCORD"
+                    ),
+
+
+                    (
+                        "Échec",
+                        "ECHEC"
+                    ),
+
+
+                    (
+                        "Opérateur",
+                        "OPERATEUR"
+                    ),
+
+
+                    (
+                        "Commentaire",
+                        "COMMENTAIRE"
+                    ),
+
+
+                    # ------------------------------
+                    # R1
+                    # ------------------------------
+
+
+                    (
+                        "R1 Retraite",
+                        "R1RETRAITE"
+                    ),
+
+
+                    (
+                        "R1 CA",
+                        "R1CA"
+                    ),
+
+
+                    (
+                        "R1 Effectif",
+                        "R1EFFECTIF"
+                    ),
+
+
+                    (
+                        "R1 Portable",
+                        "R1PORTABLE"
+                    ),
+
+
+                    (
+                        "R1 Date",
+                        "R1DATE"
+                    ),
+
+
+                    (
+                        "R1 Heure",
+                        "R1HEURE"
+                    ),
+
+
+                    (
+                        "R1 Remarques",
+                        "R1REMARQUES"
+                    ),
+
                 ]
             )
         )

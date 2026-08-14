@@ -95,6 +95,7 @@ QWidget {
     padding: 9px 12px;
 
     color: #303030;
+
     selection-background-color: #B51F23;
 }
 
@@ -492,4 +493,190 @@ QToolTip {
     padding: 6px;
 
     border-radius: 4px;
+}
+
+
+/* ==========================================================
+   FILTRES - MENU
+   ========================================================== */
+
+#filterMenu {
+    background-color: #FFFFFF;
+
+    color: #303030;
+
+    border: 1px solid #D9DDE2;
+
+    border-radius: 8px;
+
+    padding: 5px;
+}
+
+
+/* ==========================================================
+   FILTRES - CONTENU
+   ========================================================== */
+
+#filterWidget {
+    background-color: #FFFFFF;
+
+    color: #303030;
+}
+
+
+/* ==========================================================
+   FILTRES - LISTE
+   ========================================================== */
+
+#filterList {
+    background-color: #FFFFFF;
+
+    color: #303030;
+
+    border: 1px solid #E1E3E6;
+
+    border-radius: 7px;
+
+    outline: none;
+}
+
+
+#filterList::item {
+    background-color: #FFFFFF;
+
+    color: #303030;
+
+    padding: 7px 8px;
+
+    border-radius: 5px;
+}
+
+
+#filterList::item:hover {
+    background-color: #FCF1F1;
+
+    color: #303030;
+}
+
+
+#filterList::item:selected {
+    background-color: #F7E3E4;
+
+    color: #303030;
+}
+
+
+/* ==========================================================
+   FILTRES - BOUTON OK
+   ========================================================== */
+
+#filterApplyButton {
+    background-color: #B51F23;
+
+    color: #FFFFFF;
+
+    border: 1px solid #B51F23;
+
+    border-radius: 7px;
+
+    padding: 7px 18px;
+}
+
+
+#filterApplyButton:hover {
+    background-color: #991A1D;
+
+    border-color: #991A1D;
+}
+
+
+#filterApplyButton:pressed {
+    background-color: #801518;
+
+    border-color: #801518;
+}
+
+
+/* ==========================================================
+   FILTRES - BOUTON ANNULER
+   ========================================================== */
+
+#filterCancelButton {
+    background-color: #FFFFFF;
+
+    color: #303030;
+
+    border: 1px solid #D5D8DC;
+
+    border-radius: 7px;
+
+    padding: 7px 18px;
+}
+
+
+#filterCancelButton:hover {
+    background-color: #F7F7F7;
+
+    border-color: #B51F23;
+}
+
+
+/* ==========================================================
+   FILTRES - CASES À COCHER
+   ========================================================== */
+
+#filterList::indicator {
+    width: 16px;
+    height: 16px;
+}
+
+
+#filterList::indicator:unchecked {
+    background-color: #FFFFFF;
+
+    border: 1px solid #C7C9CC;
+
+    border-radius: 4px;
+}
+
+
+#filterList::indicator:checked {
+    background-color: #B51F23;
+
+    border: 1px solid #B51F23;
+
+    border-radius: 4px;
+}
+
+
+/* ==========================================================
+   FILTRES - SCROLLBAR
+   ========================================================== */
+
+#filterList QScrollBar:vertical {
+    background-color: #F4F5F7;
+
+    width: 9px;
+
+    margin: 0;
+}
+
+
+#filterList QScrollBar::handle:vertical {
+    background-color: #C7C9CC;
+
+    border-radius: 4px;
+
+    min-height: 30px;
+}
+
+
+#filterList QScrollBar::handle:vertical:hover {
+    background-color: #9FA1A4;
+}
+
+
+#filterList QScrollBar::add-line:vertical,
+#filterList QScrollBar::sub-line:vertical {
+    height: 0;
 }

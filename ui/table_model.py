@@ -4,12 +4,17 @@ from PySide6.QtGui import QStandardItemModel, QStandardItem
 class EntrepriseTableModel(QStandardItemModel):
 
     HEADERS = [
-        "SIREN",
-        "Nom",
-        "Commune",
+        "Activité principale",
+        "Catégorie entreprise",
+        "Nature juridique",
+        "Section activité principale",
+        "Tranche effectif salarié",
+        "Dirigeant année de naissance",
+        "Étab. activité principale",
+        "Étab. code postal",
+        "Étab. commune",
         "Téléphone",
         "Traité",
-        "Code Postal",
     ]
 
     def __init__(self):
@@ -33,13 +38,17 @@ class EntrepriseTableModel(QStandardItemModel):
 
             ligne = [
 
-                QStandardItem(str(e.siren)),
-                QStandardItem(e.nom or ""),
+                QStandardItem(e.activite_principale or ""),
+                QStandardItem(e.categorie_entreprise or ""),
+                QStandardItem(e.nature_juridique or ""),
+                QStandardItem(e.section_activite_principale or ""),
+                QStandardItem(e.tranche_effectif_salarie or ""),
+                QStandardItem(str(e.dirigeant_annee_de_naissance or "")),
+                QStandardItem(e.etab_activite_principale or ""),
+                QStandardItem(e.etab_code_postal or ""),
                 QStandardItem(e.etab_libelle_commune or ""),
                 QStandardItem(e.telephone or ""),
                 QStandardItem(e.traite or ""),
-                QStandardItem(e.etab_code_postal or ""),
-
             ]
 
             for item in ligne:

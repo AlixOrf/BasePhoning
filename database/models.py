@@ -110,3 +110,5 @@ class Entreprise(Base):
     etab_est_siege = Column(String)
 
     etab_liste_enseignes = Column(String)
+
+    email = Column(String)
