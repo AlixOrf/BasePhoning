@@ -11,7 +11,9 @@ La Base Phoning, n'ayant pour le moment pas de meilleur nom, est la base de donn
     - [Pagination](#pagination)
 - [Importation en Excel](#importation-en-excel)
 - [Base de données](#base-de-données)
-- [Fonctionnalités](#fonctionnalités)
+    - [Création de la base de données](#création-de-la-base-de-données)
+    - [Importation des données](#importation-des-données)
+- [Interface](#interface)
 - [Contributeurs](#contributeurs)
 
 ## **Prérequis**
@@ -1529,13 +1531,82 @@ Exemple :
 ```
 ## **Importation en Excel**
 
-La première étape pour la création de la base phoning est d'importer l'api en excel, pour ce faire nous avons créé différents code Python. 
+La première étape pour la création de la base de phoning consiste à importer les données de l’API au format Excel. Pour ce faire, nous avons créé plusieurs scripts Python :
 
-**importation_excel.py** : Ce code 
+- **api/importation_excel.py** : Ce code et ses déclinaisons permettent de récupérer les entreprises depuis l'API selon des critères définis.
+- **api/séparation.py** : Ce code permet de séparer les entreprises ayant pour dirigeant une personne morale des entreprises ayant pour dirigeant une personne physique.
+- **api/holding.py** : Ce code permet de retrouver les entreprises mères des entreprises ayant pour dirigeant une personne morale.
+- **api/nettoyage.py** : Ce code permet de fusionner et de nettoyer l’ensemble des données.
+- **api/url.py** : Ce code permet de créer les URL associées aux entreprises.
+- **utils/alain.py** : Ce code permet de repérer les entreprises déjà traitées.
+- **api/date.py** : Ce code permet de finaliser le nettoyage et l’enregistrement des données.
+
 ## **Base de données**
 
-## **Fonctionnalités**
+### Création de la base de données
 
+Pour créer et gérer la base de données, nous avons plusieurs fichiers :
+
+- **database/crud.py** : Ce fichier contient les fonctions permettant d’effectuer les différentes opérations sur la base de données, notamment la récupération, l’ajout, la modification et la suppression de données.
+- **database/database.py** : Ce fichier permet de configurer la connexion à la base de données et de définir les éléments nécessaires à son utilisation.
+- **database/models.py** : Ce fichier définit le modèle de notre base de données, notamment la structure de la table des entreprises et ses différentes colonnes.
+- **imports/importdb.py** : Ce fichier permet d’ouvrir un fichier Excel, de vérifier si le SIREN existe déjà dans la base de données, puis de mettre à jour l’entreprise existante ou d’en ajouter une nouvelle.
+
+Pour créer la base de données, nous avons également besoin du fichier **main.py** :
+
+```python
+from database.database import Base, engine
+import database.models
+
+
+def main():
+    Base.metadata.create_all(bind=engine)
+    print("Base de données créée avec succès !")
+
+
+if __name__ == "__main__":
+    main()
+```
+
+### Importation des données
+
+1. **Créer la base de données**
+
+   Pour cela, il faut exécuter **main.py** et vérifier que le fichier **database/entreprises.db** a bien été créé.
+
+2. **Importer les données**
+
+   Une fois la base de données créée, il faut charger les données en exécutant **imports/importdb.py** avec la commande :
+
+```bash
+python -m imports.importdb
+```
+
+## **Interface**
+L'interface de notre outils est plutôt simple et epuré elle se compose des codes suivant.
+```python
+import sys
+
+from PySide6.QtWidgets import QApplication
+
+from ui.main_window import MainWindow
+
+
+def main():
+
+    app = QApplication(sys.argv)
+
+    fenetre = MainWindow()
+    fenetre.show()
+
+    sys.exit(app.exec())
+
+
+if __name__ == "__main__":
+    main()
+```
+
+**ui/mainwindow.py**
 
 ## **Contributeurs**
 - Alix Orfeuvre

@@ -1061,8 +1061,8 @@ act_dict = {
 print("Lecture des fichiers Excel...")
 
 # Chargement des deux fichiers
-df1 = pd.read_excel("entreprises_siren_74_V12pp.xlsx")
-df2 = pd.read_excel("entreprises_siren_74_final.xlsx")
+df1 = pd.read_excel("entreprises_siren_95_V5pp.xlsx")
+df2 = pd.read_excel("entreprises_siren_95_V6.xlsx")
 
 print(f"Fichier 1 : {len(df1)} lignes")
 print(f"Fichier 2 : {len(df2)} lignes")
@@ -1189,8 +1189,62 @@ mask_exclude = (
     (df["dirigeant_qualite"] == "Commissaire aux comptes titulaire") |
     (df["dirigeant_annee_de_naissance"] < 1954) |
     (df["dirigeant_annee_de_naissance"] > 1972) |
-    (df["activite_principale"] == "Transports de voyageurs par taxis")
+    (df["activite_principale"] == "Transports de voyageurs par taxis") |
+    (df["activite_principale"] == "Activités de clubs de sports") |
+    (df["activite_principale"] == "Activités de soutien au spectacle vivant") |
+    (df["activite_principale"] == "Activités juridiques") |
+    (df["activite_principale"] == "Activités photographiques") |
+    (df["activite_principale"] == "Agences immobilières") |
+    (df["activite_principale"] == "Autres activités récréatives et de loisirs") |
+    (df["activite_principale"] == "Autres commerces de détail alimentaires en magasin spécialisé") |
+    (df["activite_principale"] == "Autres commerces de détail en magasin non spécialisé") |
+    (df["activite_principale"] == "Autres intermédiaires du commerce en denrées, boissons et tabac") |
+    (df["activite_principale"] == "Autres intermédiaires du commerce en produits divers") |
+    (df["activite_principale"] == "Autres services personnels n.c.a.") |
+    (df["activite_principale"] == "Charcuterie") |
+    (df["activite_principale"] == "Coiffure") |
+    (df["activite_principale"] == "Commerce de détail d'articles de sport en magasin spécialisé") |
+    (df["activite_principale"] == "Commerce de détail d'autres équipements du foyer") |
+    (df["activite_principale"] == "Commerce de détail de biens d'occasion en magasin") |
+    (df["activite_principale"] == "Commerce de détail de boissons en magasin spécialisé") |
+    (df["activite_principale"] == "Commerce de détail de fleurs, plantes, graines, engrais, animaux de compagnie et aliments pour ces animaux") |
+    (df["activite_principale"] == "Commerce de détail de journaux et papeterie en magasin spécialisé") |
+    (df["activite_principale"] == "Commerce de détail de livres en magasin spécialisé") |
+    (df["activite_principale"] == "Commerce de détail de quincaillerie, peintures et verres en grandes surfaces (400 m² et plus)") |
+    (df["activite_principale"] == "Commerce de détail de viandes et de produits à base de viande en magasin spécialisé") |
+    (df["activite_principale"] == "Commerce de détail d'équipements automobiles") |
+    (df["activite_principale"] == "Commerce de détail d'habillement en magasin spécialisé") |
+    (df["activite_principale"] == "Commerce de voitures et de véhicules automobiles légers") |
+    (df["activite_principale"] == "Commerce et réparation de motocycles") |
+    (df["activite_principale"] == "Conseil pour les affaires et autres conseils de gestion") |
+    (df["activite_principale"] == "Cuisson de produits de boulangerie") |
+    (df["activite_principale"] == "Débits de boissons") |
+    (df["activite_principale"] == "Entretien corporel") |
+    (df["activite_principale"] == "Entretien et réparation de véhicules automobiles légers") |
+    (df["activite_principale"] == "Gestion de fonds") |
+    (df["activite_principale"] == "Hébergement médicalisé pour personnes âgées") |
+    (df["activite_principale"] == "Hébergement social pour personnes âgées") |
+    (df["activite_principale"] == "Hébergement touristique et autre hébergement de courte durée") |
+    (df["activite_principale"] == "Hôtels et hébergement similaire") |
+    (df["activite_principale"] == "Hypermarchés") |
+    (df["activite_principale"] == "Industrie des eaux de table") |
+    (df["activite_principale"] == "Location de terrains et d'autres biens immobiliers") |
+    (df["activite_principale"] == "Location-bail de propriété intellectuelle et de produits similaires, à l'exception des œuvres soumises à") |
+    (df["activite_principale"] == "Organisation de jeux de hasard et d'argent") |
+    (df["activite_principale"] == "Pâtisserie") |
+    (df["activite_principale"] == "Portails internet") |
+    (df["activite_principale"] == "Production de films et de programmes pour la télévision") |
+    (df["activite_principale"] == "Promotion immobilière d'autres bâtiments") |
+    (df["activite_principale"] == "Promotion immobilière de logements") |
+    (df["activite_principale"] == "Régie publicitaire de médias") |
+    (df["activite_principale"] == "Restauration de type rapide") |
+    (df["activite_principale"] == "Restauration traditionnelle") |
+    (df["activite_principale"] == "Supermarchés") |
+    (df["activite_principale"] == "Supports juridiques de gestion de patrimoine mobilier") |
+    (df["activite_principale"] == "Télécommunications filaires") |
+    (df["activite_principale"] == "Téléphériques et remontées mécaniques")
 )
+
 df = df[~mask_exclude].reset_index(drop=True)
 
 # On enlève les colones inutiles
@@ -1202,6 +1256,6 @@ df = df.drop(columns=[c for c in cols_to_drop if c in df.columns], errors="ignor
 
 
 # On sauvegarde
-df.to_excel("entreprises_siren_74_V2.xlsx", index=False)
+df.to_excel("entreprises_siren_95_V7.xlsx", index=False)
 
 print("Terminé.")

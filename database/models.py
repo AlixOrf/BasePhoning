@@ -7,10 +7,6 @@ class Entreprise(Base):
 
     id = Column(Integer, primary_key=True, autoincrement=True)
 
-    # =========================
-    # Informations entreprise
-    # =========================
-
     siren = Column(String(9), unique=True, nullable=False, index=True)
 
     nom = Column(String)
@@ -31,10 +27,6 @@ class Entreprise(Base):
 
     tranche_effectif_salarie = Column(String)
 
-    # =========================
-    # Dirigeant
-    # =========================
-
     dirigeant_nom = Column(String)
 
     dirigeant_prenoms = Column(String)
@@ -51,10 +43,6 @@ class Entreprise(Base):
 
     dirigeant_denomination = Column(String)
 
-    # =========================
-    # Etablissement
-    # =========================
-
     etab_activite_principale = Column(String)
 
     etab_adresse = Column(String)
@@ -67,20 +55,58 @@ class Entreprise(Base):
 
     etab_longitude = Column(Float)
 
-    # =========================
-    # Finances
-    # =========================
-
     ca_recent = Column(String)
 
     resultat_net_recent = Column(String)
-
-    # =========================
-    # Prospection
-    # =========================
 
     recherche_google = Column(String)
 
     telephone = Column(String)
 
     traite = Column(String)
+
+    CONSULTANT = Column(String)
+   
+    NUMCONSULTANT = Column(String)
+   
+    TOTAL_APPELS = Column(String)
+   
+    DATE_APPEL = Column(String)
+   
+    DUREE = Column(String)
+   
+    ACCORD = Column(String)
+   
+    DESACCORD = Column(String)
+   
+    ECHEC = Column(String)
+   
+    OPERATEUR = Column(String)
+   
+    COMMENTAIRE = Column(String)
+   
+    R1RETRAITE = Column(String)
+   
+    R1CA = Column(String)
+   
+    R1EFFECTIF = Column(String)
+   
+    R1PORTABLE = Column(String)
+   
+    R1DATE = Column(String)
+   
+    R1HEURE = Column(String)
+   
+    R1REMARQUES = Column(String)
+
+    nombre_etablissements = Column(Integer)
+
+    etab_caractere_employeur = Column(String)
+
+    etab_commune = Column(String)
+
+    etab_epci = Column(String)
+
+    etab_est_siege = Column(String)
+
+    etab_liste_enseignes = Column(String)

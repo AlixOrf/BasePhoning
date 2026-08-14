@@ -2,7 +2,7 @@ import pandas as pd
 import urllib.parse
 
 # === Charger le fichier existant ===
-df = pd.read_excel("entreprises_siren_74_V2.xlsx")
+df = pd.read_excel("entreprises_siren_95_V7.xlsx")
 
 # === Colonnes utilisées ===
 col_nom = "nom_complet"
@@ -19,6 +19,6 @@ df["recherche_google"] = df["recherche_google"].apply(
 )
 
 # === Sauvegarde ===
-df.to_excel("entreprises_siret_74_V3.xlsx", index=False)
+df.to_excel("entreprises_siren_95_V8.xlsx", index=False)
 
-print("Fichier exporté : entreprises_siret_74_V3.xlsx")
+print("Fichier exporté : entreprises_siren_95_V8.xlsx")

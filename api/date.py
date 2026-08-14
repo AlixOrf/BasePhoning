@@ -2,9 +2,9 @@ import pandas as pd
 import os
 
 # Fichiers
-FICHIER_ENTREE = "entreprises_74.xlsx"
+FICHIER_ENTREE = "entreprises_siren_95_V8.xlsx"
 DOSSIER_SORTIE = "finaux"
-FICHIER_SORTIE = os.path.join(DOSSIER_SORTIE, "74.xlsx")
+FICHIER_SORTIE = os.path.join(DOSSIER_SORTIE, "95.xlsx")
 
 # Création du dossier si nécessaire
 os.makedirs(DOSSIER_SORTIE, exist_ok=True)

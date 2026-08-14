@@ -1,13 +1,13 @@
 import pandas as pd
 
 # Lecture des fichiers
-df_v10 = pd.read_excel("entreprises_siren_74_V1.xlsx")
-df_v11 = pd.read_excel("entreprises_siren_74_V2.xlsx")
-df_v13 = pd.read_excel("entreprises_siren_74_V3.xlsx")
-df_v14 = pd.read_excel("entreprises_siren_74_V4.xlsx")
+df_v1 = pd.read_excel("entreprises_siren_95_V1.xlsx")
+df_v2 = pd.read_excel("entreprises_siren_95_V2.xlsx")
+df_v3 = pd.read_excel("entreprises_siren_95_V3.xlsx")
+df_v4 = pd.read_excel("entreprises_siren_95_V4.xlsx")
 
 # Fusion des données
-df = pd.concat([df_v10, df_v11, df_v13, df_v14], ignore_index=True)
+df = pd.concat([df_v1, df_v2, df_v3, df_v4], ignore_index=True)
 
 # Remplacement des valeurs vides par "Personne morale"
 df["dirigeant_type_dirigeant"] = (
@@ -34,8 +34,8 @@ df_pm = df[
 ]
 
 # Export
-df_pp.to_excel("entreprises_siren_74_V5pp.xlsx", index=False)
-df_pm.to_excel("entreprises_siren_74_V5pm.xlsx", index=False)
+df_pp.to_excel("entreprises_siren_95_V5pp.xlsx", index=False)
+df_pm.to_excel("entreprises_siren_95_V5pm.xlsx", index=False)
 
 print(f"Personnes physiques : {len(df_pp)} lignes")
 print(f"Personnes morales   : {len(df_pm)} lignes")

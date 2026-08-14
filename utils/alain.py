@@ -1,14 +1,13 @@
 import pandas as pd
+import openpyxl
 
 # =========================
 # FICHIERS
 # =========================
-fichier_principal = "entreprises_siret_74_V3.xlsx"
+fichier_principal = "entreprises_siren_93_V8.xlsx"
 
 fichiers_alain = [
-    "fichier 74 janv 2021.xls",
-    "fichier 74 dec 2024 globale pour Alain et Phonetic.xlsx",
-    "Fichier 74 04-2018.xlsx"
+    "Alain/93 - 1.xlsx",
 ]
 
 # =========================
@@ -83,10 +82,12 @@ df_principal.loc[mask, "traite"] = "traité par Alain"
 # =========================
 # SAUVEGARDE
 # =========================
-fichier_sortie = "entreprises_74.xlsx"
+fichier_sortie = "entreprises_siren_93_V9.xlsx"
 
 df_principal.to_excel(fichier_sortie, index=False)
 
 print("\n=== TERMINÉ ===")
 print(f"Entreprises marquées : {mask.sum()}")
 print(f"Fichier créé : {fichier_sortie}")
+print("\n=== ENTREPRISES TRAITÉES PAR ALAIN MAIS ABSENTES ===")
+print(f"Nombre : {len(absentes)}")

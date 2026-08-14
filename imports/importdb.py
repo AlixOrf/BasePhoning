@@ -2,7 +2,7 @@ import pandas as pd
 from pathlib import Path
 
 BASE_DIR = Path(__file__).resolve().parent.parent.parent
-FICHIER_EXCEL = BASE_DIR / "finaux" / "74.xlsx"
+FICHIER_EXCEL = BASE_DIR / "finaux" / "00.xlsx"
 
 from database.database import SessionLocal
 from database.models import Entreprise
@@ -26,6 +26,15 @@ def importer_excel(fichier):
         for _, ligne in df.iterrows():
 
             donnees = ligne.to_dict()
+
+            # -------------------------
+            # [NON-DIFFUSIBLE] -> vide
+            # -------------------------
+
+            for cle, valeur in donnees.items():
+
+                if valeur == "[NON-DIFFUSIBLE]":
+                    donnees[cle] = None
 
             # -------------------------
             # Conversion des dates
@@ -53,7 +62,6 @@ def importer_excel(fichier):
 
                 if pd.isna(valeur):
                     donnees[cle] = None
-
 
             # -------------------------
             # Recherche SIREN
@@ -88,7 +96,7 @@ def importer_excel(fichier):
 
         session.commit()
 
-        print(f"Import terminé.")
+        print("Import terminé.")
         print(f"Ajoutées : {ajoutes}")
         print(f"Mises à jour : {maj}")
 
